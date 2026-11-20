@@ -1,0 +1,3128 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AromatikLab — Benzena & Turunannya | Kimia SMA XII</title>
+
+    <!-- Google Fonts: Space Grotesk (Display), Plus Jakarta Sans (Body), JetBrains Mono (Rumus & Angka) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. DESIGN TOKENS & SISTEM WARNA (LABORATORIUM FUTURISTIK TENANG)
+           ========================================================================== */
+        :root {
+            /* Tema Gelap Default: Biru-Hijau Tua (#061014) + Mint Elektrik + Amber */
+            --bg-base: #061014;
+            --bg-elevated: #0b191f;
+            --bg-glass: rgba(11, 26, 32, 0.74);
+            --bg-glass-strong: rgba(9, 21, 26, 0.92);
+            --bg-card-hover: rgba(17, 38, 46, 0.85);
+            --bg-subtle: rgba(255, 255, 255, 0.04);
+
+            --text-primary: #ecf6f8;
+            --text-secondary: #9bb5be;
+            --text-muted: #67838e;
+
+            --accent-mint: #00e5a8;
+            --accent-mint-dim: rgba(0, 229, 168, 0.14);
+            --accent-mint-glow: rgba(0, 229, 168, 0.35);
+            --accent-amber: #f59e0b;
+            --accent-amber-dim: rgba(245, 158, 11, 0.16);
+
+            --border-subtle: rgba(190, 232, 240, 0.11);
+            --border-active: rgba(0, 229, 168, 0.45);
+
+            --danger: #f43f5e;
+            --danger-dim: rgba(244, 63, 94, 0.16);
+
+            --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            --shadow-float: 0 24px 60px -12px rgba(0, 0, 0, 0.78), 0 0 0 1px var(--border-subtle);
+
+            --font-display: 'Space Grotesk', system-ui, sans-serif;
+            --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-lg: 20px;
+            --radius-md: 14px;
+            --radius-sm: 10px;
+        }
+
+        [data-theme="light"] {
+            --bg-base: #f2f7f8;
+            --bg-elevated: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.82);
+            --bg-glass-strong: rgba(255, 255, 255, 0.96);
+            --bg-card-hover: rgba(240, 249, 250, 0.95);
+            --bg-subtle: rgba(6, 16, 20, 0.045);
+
+            --text-primary: #09181e;
+            --text-secondary: #3b5560;
+            --text-muted: #5d7884;
+
+            --accent-mint: #008c68;
+            --accent-mint-dim: rgba(0, 140, 104, 0.11);
+            --accent-mint-glow: rgba(0, 140, 104, 0.24);
+            --accent-amber: #d97706;
+            --accent-amber-dim: rgba(217, 119, 6, 0.12);
+
+            --border-subtle: rgba(9, 24, 30, 0.11);
+            --border-active: rgba(0, 140, 104, 0.45);
+
+            --danger: #e11d48;
+            --danger-dim: rgba(225, 29, 72, 0.11);
+
+            --shadow-card: 0 10px 28px -8px rgba(9, 24, 30, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            --shadow-float: 0 24px 50px -12px rgba(9, 24, 30, 0.18), 0 0 0 1px var(--border-subtle);
+        }
+
+        /* ==========================================================================
+           2. RESET, TEKSTUR NOISE & AKSESIBILITAS
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            min-height: 100%;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 16px;
+            line-height: 1.6;
+            transition: background-color 0.35s var(--ease-spring), color 0.35s var(--ease-spring);
+            overflow-x: hidden;
+        }
+
+        /* Tekstur noise organik halus & pendaran cahaya atmosferik */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.032;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 520px;
+            height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent-mint-dim) 0%, transparent 70%);
+            top: -160px;
+            right: -120px;
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(40px);
+        }
+
+        /* Fokus keyboard jelas untuk aksesibilitas */
+        :focus-visible {
+            outline: 2px solid var(--accent-mint);
+            outline-offset: 3px;
+        }
+
+        .mono, .chem {
+            font-family: var(--font-mono);
+            font-variant-numeric: tabular-nums;
+        }
+
+        h1, h2, h3, .display-font {
+            font-family: var(--font-display);
+            letter-spacing: -0.025em;
+        }
+
+        /* Penghormatan prefers-reduced-motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* ==========================================================================
+           3. INTRO SINEMATIK (< 2 DETIK, DAPAT DILEWATI)
+           ========================================================================== */
+        #cinematicIntro {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background-color: var(--bg-base);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            transition: opacity 0.45s var(--ease-spring), visibility 0.45s;
+        }
+
+        #cinematicIntro.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-atom {
+            transition: transform 0.85s var(--ease-spring), opacity 0.5s ease;
+        }
+
+        .intro-title-wrap {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s var(--ease-spring) 0.55s, transform 0.5s var(--ease-spring) 0.55s;
+        }
+
+        #cinematicIntro.assembled .intro-title-wrap {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #btnSkipIntro {
+            position: absolute;
+            bottom: calc(2rem + env(safe-area-inset-bottom));
+            right: 2rem;
+            min-height: 44px;
+            padding: 0 1rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(12px);
+        }
+
+        /* ==========================================================================
+           4. LAYOUT APLIKASI: SIDEBAR DESKTOP & TAB BAR BAWAH MOBILE
+           ========================================================================== */
+        .app-shell {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Desktop */
+        .sidebar {
+            width: 268px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            padding: 1.5rem 1.15rem;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 30;
+        }
+
+        .brand-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.35rem 0.5rem 1.35rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .brand-emblem {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--accent-mint-dim);
+            border: 1px solid var(--border-active);
+            color: var(--accent-mint);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 0 20px var(--accent-mint-glow);
+        }
+
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-top: 1.25rem;
+            position: relative;
+        }
+
+        .nav-btn {
+            min-height: 46px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s var(--ease-spring);
+            position: relative;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-subtle);
+        }
+
+        .nav-btn.active {
+            color: var(--accent-mint);
+            background: var(--accent-mint-dim);
+            border-color: var(--border-active);
+            box-shadow: 0 0 24px -6px var(--accent-mint-glow);
+        }
+
+        .nav-btn svg {
+            width: 19px;
+            height: 19px;
+            flex-shrink: 0;
+        }
+
+        /* Ring Progres Sesi */
+        .progress-card {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+
+        .ring-wrap {
+            position: relative;
+            width: 46px;
+            height: 46px;
+            flex-shrink: 0;
+        }
+
+        .ring-wrap svg {
+            transform: rotate(-90deg);
+            width: 46px;
+            height: 46px;
+        }
+
+        .ring-text {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--accent-mint);
+        }
+
+        /* Area Utama & Top Bar Mobile */
+        .main-wrapper {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 25;
+            padding: 0.85rem 1.5rem;
+            padding-top: calc(0.85rem + env(safe-area-inset-top));
+            background: var(--bg-glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .mobile-brand {
+            display: none;
+            align-items: center;
+            gap: 0.55rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-left: auto;
+        }
+
+        .icon-pill-btn {
+            min-height: 44px;
+            min-width: 44px;
+            padding: 0 0.95rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            cursor: pointer;
+            transition: transform 0.2s var(--ease-bounce), border-color 0.2s ease;
+        }
+
+        .icon-pill-btn:hover {
+            border-color: var(--border-active);
+        }
+
+        .icon-pill-btn:active {
+            transform: scale(0.95);
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 1.75rem 1.5rem 5rem;
+        }
+
+        /* Tab Bar Bawah Mobile */
+        .mobile-tabbar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: var(--bg-glass-strong);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border-top: 1px solid var(--border-subtle);
+            padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+            justify-content: space-around;
+        }
+
+        .mobile-tab-btn {
+            min-height: 48px;
+            min-width: 64px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s var(--ease-bounce);
+        }
+
+        .mobile-tab-btn.active {
+            color: var(--accent-mint);
+        }
+
+        .mobile-tab-btn:active {
+            transform: scale(0.92);
+        }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .mobile-brand { display: flex; }
+            .mobile-tabbar { display: flex; }
+            .content-container { padding: 1.25rem 1rem calc(5.5rem + env(safe-area-inset-bottom)); }
+            .topbar { padding: 0.65rem 1rem; }
+        }
+
+        /* ==========================================================================
+           5. KOMPONEN UI, TRANSISI MODUL & GLOSARIUM GARIS PUTUS-PUTUS
+           ========================================================================== */
+        .module-panel {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .module-panel.active {
+            display: block;
+            animation: panelEnter 0.42s var(--ease-spring) forwards;
+        }
+
+        @keyframes panelEnter {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-mint);
+            margin-bottom: 0.4rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2.05rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-lead {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 68ch;
+            margin-bottom: 1.75rem;
+        }
+
+        .glass-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.35rem;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.28s var(--ease-spring), border-color 0.28s ease;
+        }
+
+        .btn-action {
+            min-height: 44px;
+            padding: 0.6rem 1.1rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.22s var(--ease-bounce);
+        }
+
+        .btn-action:hover:not(:disabled) {
+            border-color: var(--border-active);
+            background: var(--bg-card-hover);
+        }
+
+        .btn-action:active:not(:disabled) {
+            transform: scale(0.96);
+        }
+
+        .btn-action.primary {
+            background: var(--accent-mint);
+            color: #031511;
+            border-color: var(--accent-mint);
+            font-weight: 700;
+            box-shadow: 0 6px 20px -4px var(--accent-mint-glow);
+        }
+
+        .btn-action.primary:hover:not(:disabled) {
+            filter: brightness(1.06);
+        }
+
+        .btn-action:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+        }
+
+        /* Istilah Glosarium Interaktif (Garis Bawah Putus-Putus) */
+        .glossary-term {
+            color: var(--accent-mint);
+            border-bottom: 1.5px dashed var(--accent-mint);
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0 2px;
+            border-radius: 3px;
+            transition: background-color 0.2s ease;
+        }
+
+        .glossary-term:hover, .glossary-term:focus-visible {
+            background-color: var(--accent-mint-dim);
+        }
+
+        /* Popover Kaca Glosarium */
+        #glossaryPopover {
+            position: fixed;
+            z-index: 80;
+            width: min(320px, calc(100vw - 2rem));
+            background: var(--bg-glass-strong);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-active);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.1rem;
+            box-shadow: var(--shadow-float);
+            opacity: 0;
+            transform: translateY(8px) scale(0.96);
+            pointer-events: none;
+            transition: opacity 0.25s var(--ease-spring), transform 0.28s var(--ease-bounce);
+        }
+
+        #glossaryPopover.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* ==========================================================================
+           6. MODUL 1: CANVAS MOLEKUL BENZENA & GRAFIK ENERGI STABILISASI
+           ========================================================================== */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1.18fr 0.82fr;
+            gap: 1.25rem;
+            align-items: start;
+        }
+
+        @media (max-width: 960px) {
+            .split-grid { grid-template-columns: 1fr; }
+        }
+
+        .canvas-stage {
+            position: relative;
+            width: 100%;
+            height: 410px;
+            border-radius: var(--radius-md);
+            background: radial-gradient(circle at 50% 50%, rgba(0, 229, 168, 0.06) 0%, transparent 72%);
+            border: 1px solid var(--border-subtle);
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        @media (max-width: 600px) {
+            .canvas-stage { height: 340px; }
+        }
+
+        #benzeneCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: grab;
+        }
+
+        #benzeneCanvas:active { cursor: grabbing; }
+
+        /* Tooltip Kaca Animasi Pegas pada Atom / Ikatan */
+        .atom-tooltip {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            right: 14px;
+            max-width: 340px;
+            background: var(--bg-glass-strong);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--border-active);
+            border-radius: var(--radius-md);
+            padding: 0.85rem 1rem;
+            box-shadow: var(--shadow-float);
+            transform: scale(0.95) translateY(-4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.32s var(--ease-bounce), opacity 0.25s ease;
+        }
+
+        .atom-tooltip.show {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .segmented-group {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            padding: 0.3rem;
+            border-radius: 12px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .seg-btn {
+            min-height: 40px;
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.22s var(--ease-spring);
+        }
+
+        .seg-btn.active {
+            background: var(--accent-mint);
+            color: #041612;
+            font-weight: 700;
+        }
+
+        .cpk-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 0.85rem;
+        }
+
+        .cpk-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        /* Range Slider Kustom */
+        input[type="range"].lab-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--border-subtle);
+            outline: none;
+        }
+
+        input[type="range"].lab-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent-mint);
+            border: 3px solid var(--bg-base);
+            box-shadow: 0 0 14px var(--accent-mint-glow);
+            cursor: pointer;
+            transition: transform 0.18s var(--ease-bounce);
+        }
+
+        input[type="range"].lab-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+        }
+
+        /* ==========================================================================
+           7. MODUL 2: GALERI 3D TILT & PEMBANGUN TATA NAMA DRAG-AND-DROP
+           ========================================================================== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(225px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+            perspective: 1000px;
+        }
+
+        .mol-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.15rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.22s var(--ease-spring), border-color 0.25s ease, box-shadow 0.25s ease;
+            min-height: 44px;
+        }
+
+        .mol-card:hover {
+            border-color: var(--border-active);
+            box-shadow: var(--shadow-float);
+        }
+
+        .mol-badge {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            background: var(--accent-mint-dim);
+            color: var(--accent-mint);
+            margin-top: 0.35rem;
+        }
+
+        /* Builder Tata Nama Seret & Letakkan */
+        .nomenclature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        @media (max-width: 820px) {
+            .nomenclature-grid { grid-template-columns: 1fr; }
+        }
+
+        .sub-chip-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.6rem 0 1.1rem;
+        }
+
+        .sub-chip {
+            min-height: 44px;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: grab;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            transition: transform 0.2s var(--ease-bounce), border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .sub-chip:hover, .sub-chip.selected-chip {
+            border-color: var(--accent-mint);
+            background: var(--accent-mint-dim);
+            color: var(--accent-mint);
+            transform: translateY(-2px);
+        }
+
+        .drop-node {
+            cursor: pointer;
+            transition: transform 0.2s var(--ease-bounce);
+        }
+
+        .drop-node:hover circle {
+            stroke: var(--accent-mint);
+            stroke-width: 2.5;
+        }
+
+        .name-reveal {
+            animation: namePop 0.35s var(--ease-bounce);
+        }
+
+        @keyframes namePop {
+            0% { opacity: 0.4; transform: scale(0.96); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* ==========================================================================
+           8. MODUL 3: TIMELINE REAKSI ELEKTROFILIK & GRAFIK ENERGI
+           ========================================================================== */
+        .rx-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1.25rem;
+            margin-top: 1.1rem;
+        }
+
+        @media (max-width: 900px) {
+            .rx-grid { grid-template-columns: 1fr; }
+        }
+
+        .stage-box {
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-subtle);
+            padding: 0.85rem;
+            min-height: 225px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .director-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.25rem;
+        }
+
+        @media (max-width: 720px) {
+            .director-compare { grid-template-columns: 1fr; }
+        }
+
+        /* ==========================================================================
+           9. MODUL 4: KUIS INTERAKTIF & RING PROGRESS AKHIR
+           ========================================================================== */
+        .quiz-shell {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .option-btn {
+            width: 100%;
+            min-height: 52px;
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.65rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
+            font-weight: 500;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s var(--ease-spring);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--border-active);
+            transform: translateX(4px);
+        }
+
+        .option-btn.correct {
+            border-color: var(--accent-mint);
+            background: var(--accent-mint-dim);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .option-btn.wrong {
+            border-color: var(--danger);
+            background: var(--danger-dim);
+        }
+
+        .opt-key {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-subtle);
+            display: grid;
+            place-items: center;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           10. BOTTOM SHEET / MODAL DETAIL TURUNAN BENZENA
+           ========================================================================== */
+        #sheetBackdrop {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            background: rgba(3, 10, 13, 0.65);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        #sheetBackdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #detailSheet {
+            position: fixed;
+            z-index: 70;
+            background: var(--bg-glass-strong);
+            backdrop-filter: blur(26px);
+            -webkit-backdrop-filter: blur(26px);
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-float);
+            transition: transform 0.38s var(--ease-spring), opacity 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            #detailSheet {
+                top: 50%;
+                left: 50%;
+                width: 92%;
+                max-width: 540px;
+                max-height: 86vh;
+                border-radius: 24px;
+                transform: translate(-50%, -46%) scale(0.95);
+                opacity: 0;
+                pointer-events: none;
+                overflow-y: auto;
+            }
+            #detailSheet.open {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        @media (max-width: 767px) {
+            #detailSheet {
+                left: 0;
+                right: 0;
+                bottom: 0;
+                max-height: 85vh;
+                border-radius: 24px 24px 0 0;
+                padding-bottom: env(safe-area-inset-bottom);
+                transform: translateY(105%);
+                pointer-events: none;
+                overflow-y: auto;
+            }
+            #detailSheet.open {
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+        }
+
+        #confettiCanvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 95;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow" aria-hidden="true"></div>
+    <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+    <!-- ======================================================================
+         1. INTRO SINEMATIK SINGKAT (< 2 DETIK, BISA DILEWATI)
+         ====================================================================== -->
+    <div id="cinematicIntro" role="dialog" aria-label="Animasi Pembuka AromatikLab">
+        <svg id="introSvg" width="180" height="180" viewBox="0 0 180 180" aria-hidden="true">
+            <circle cx="90" cy="90" r="30" fill="none" stroke="var(--accent-mint)" stroke-width="2" stroke-dasharray="6 4" opacity="0.7"></circle>
+            <g id="introAtomsGroup"></g>
+        </svg>
+        <div class="intro-title-wrap">
+            <div class="section-eyebrow" style="justify-content:center;">Kimia Organik • Kelas XII SMA</div>
+            <h2 class="display-font" style="font-size:1.75rem; font-weight:700;">AromatikLab: Benzena (<span class="chem">C₆H₆</span>)</h2>
+        </div>
+        <button type="button" id="btnSkipIntro">Lewati Intro</button>
+    </div>
+
+    <!-- ======================================================================
+         2. KERANGKA UTAMA APLIKASI
+         ====================================================================== -->
+    <div class="app-shell">
+        <!-- Sidebar Desktop -->
+        <aside class="sidebar" aria-label="Navigasi Utama">
+            <div>
+                <div class="brand-box">
+                    <div class="brand-emblem" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7 12 2"></polygon>
+                            <circle cx="12" cy="12" r="4.5"></circle>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="display-font" style="font-weight:700; font-size:1.05rem; line-height:1.15;">AromatikLab</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">Benzena & Turunannya</div>
+                    </div>
+                </div>
+
+                <nav class="nav-list" role="tablist" aria-label="Pilih Modul Pembelajaran">
+                    <button type="button" class="nav-btn active" role="tab" aria-selected="true" data-module="mod-struktur">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7 12 2"/><circle cx="12" cy="12" r="4"/></svg>
+                        <span>1. Struktur Benzena</span>
+                    </button>
+                    <button type="button" class="nav-btn" role="tab" aria-selected="false" data-module="mod-turunan">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg>
+                        <span>2. Turunan & Tata Nama</span>
+                    </button>
+                    <button type="button" class="nav-btn" role="tab" aria-selected="false" data-module="mod-reaksi">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 3h6M10 3v5.5L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 8.5V3"/><path d="M7.5 14h9"/></svg>
+                        <span>3. Reaksi Elektrofilik</span>
+                    </button>
+                    <button type="button" class="nav-btn" role="tab" aria-selected="false" data-module="mod-kuis">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        <span>4. Evaluasi & Kuis</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Cincin Progres Belajar Sesi -->
+            <div class="progress-card" aria-live="polite">
+                <div class="ring-wrap">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="19" fill="none" stroke="var(--border-subtle)" stroke-width="4"></circle>
+                        <circle id="progressRingCircle" cx="24" cy="24" r="19" fill="none" stroke="var(--accent-mint)" stroke-width="4" stroke-linecap="round" stroke-dasharray="119.38" stroke-dashoffset="89.5"></circle>
+                    </svg>
+                    <div class="ring-text" id="progressRingLabel">25%</div>
+                </div>
+                <div>
+                    <div style="font-size:0.8rem; font-weight:700;">Progres Sesi</div>
+                    <div id="progressSubLabel" style="font-size:0.73rem; color:var(--text-muted);">1 dari 4 modul dieksplorasi</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Wrapper Konten Utama -->
+        <div class="main-wrapper">
+            <header class="topbar">
+                <div class="mobile-brand">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-mint)" stroke-width="2">
+                        <polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7 12 2"></polygon>
+                        <circle cx="12" cy="12" r="4"></circle>
+                    </svg>
+                    <span>AromatikLab</span>
+                </div>
+
+                <div class="topbar-actions">
+                    <button type="button" class="icon-pill-btn" id="btnGlossaryIndex" aria-label="Buka Daftar Glosarium">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        <span>Glosarium</span>
+                    </button>
+
+                    <button type="button" class="icon-pill-btn" id="btnThemeSwitch" aria-label="Ganti Tema Terang atau Gelap">
+                        <svg id="iconSun" style="display:none;" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                        <svg id="iconMoon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                        <span id="themeText">Terang</span>
+                    </button>
+                </div>
+            </header>
+
+            <main class="content-container">
+                <!-- ============================================================
+                     MODUL 1: STRUKTUR BENZENA
+                     ============================================================ -->
+                <section id="mod-struktur" class="module-panel active" role="tabpanel">
+                    <div class="section-eyebrow">Modul 01 • Geometri & Ikatan</div>
+                    <h1 class="section-title">Arsitektur Molekul Benzena (<span class="chem">C₆H₆</span>)</h1>
+                    <p class="section-lead">
+                        Benzena adalah senyawa <button type="button" class="glossary-term" data-term="aromatik">aromatik</button> paling sederhana dengan 6 atom karbon membentuk cincin heksagon datar. Putar molekul, cubit untuk memperbesar, atau ketuk atom untuk inspeksi orbital.
+                    </p>
+
+                    <div class="split-grid">
+                        <!-- Kartu Kiri: Canvas Interaktif Molekul Benzena -->
+                        <div class="glass-card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.65rem; margin-bottom:0.85rem;">
+                                <div class="segmented-group" role="group" aria-label="Mode Tampilan Ikatan Benzena">
+                                    <button type="button" class="seg-btn active" data-bondmode="delocalized">Delokalisasi π</button>
+                                    <button type="button" class="seg-btn" data-bondmode="kekule1">Kekulé I</button>
+                                    <button type="button" class="seg-btn" data-bondmode="kekule2">Kekulé II</button>
+                                    <button type="button" class="seg-btn" data-bondmode="resonance">Resonansi ↔</button>
+                                </div>
+
+                                <button type="button" class="btn-action" id="btnResetMol" style="min-height:38px; padding:0.35rem 0.75rem; font-size:0.78rem;">
+                                    Reset Posisi
+                                </button>
+                            </div>
+
+                            <div class="canvas-stage" id="canvasStage">
+                                <canvas id="benzeneCanvas" aria-label="Visualisasi interaktif molekul benzena 6 atom C dan 6 atom H"></canvas>
+
+                                <!-- Tooltip Kaca Pegas saat Atom/Ikatan Diklik atau Di-hover -->
+                                <div class="atom-tooltip" id="atomTooltip" role="status">
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.25rem;">
+                                        <span id="tipBadge" class="mono" style="font-size:0.72rem; font-weight:700; color:var(--accent-mint);">AWAN ELEKTRON π</span>
+                                        <button type="button" id="btnCloseTip" aria-label="Tutup info atom" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.85rem; min-width:28px; min-height:28px;">✕</button>
+                                    </div>
+                                    <div id="tipTitle" style="font-weight:700; font-size:0.95rem; margin-bottom:0.2rem;">6 Elektron π Terdelokalisasi</div>
+                                    <p id="tipBody" style="font-size:0.81rem; color:var(--text-secondary); line-height:1.5;">
+                                        Keenam orbital p saling tumpang tindih menyamping membentuk cincin elektron yang berputar merata, menghasilkan panjang ikatan C–C seragam 1,40 Å.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="cpk-bar">
+                                <span><i class="cpk-dot" style="background:#64748b"></i>Karbon (C)</span>
+                                <span><i class="cpk-dot" style="background:#f8fafc"></i>Hidrogen (H)</span>
+                                <span><i class="cpk-dot" style="background:#ef4444"></i>Oksigen (O)</span>
+                                <span><i class="cpk-dot" style="background:#3b82f6"></i>Nitrogen (N)</span>
+                                <span><i class="cpk-dot" style="background:#22c55e"></i>Klorin (Cl)</span>
+                            </div>
+                        </div>
+
+                        <!-- Kartu Kanan: Slider Energi Stabilisasi & Parameter -->
+                        <div style="display:flex; flex-direction:column; gap:1.1rem;">
+                            <div class="glass-card">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+                                    <h2 style="font-size:1.05rem; font-weight:700;">Energi Stabilisasi Resonansi</h2>
+                                    <span class="mono" id="stabStageLabel" style="font-size:0.76rem; color:var(--accent-amber); font-weight:700;">BENZENA NYATA</span>
+                                </div>
+                                <p style="font-size:0.83rem; color:var(--text-secondary); margin-bottom:0.85rem;">
+                                    Geser untuk membandingkan kalor hidrogenasi teoretis (<span class="chem">1,3,5-sikloheksatriena</span>) dengan benzena aktual melalui <button type="button" class="glossary-term" data-term="resonansi">resonansi</button>.
+                                </p>
+
+                                <label for="energySlider" class="mono" style="display:flex; justify-content:space-between; font-size:0.74rem; color:var(--text-muted); margin-bottom:0.4rem;">
+                                    <span>1 Ikatan Rangkap</span>
+                                    <span>3 Rangkap Teoretis</span>
+                                    <span>Benzena Aktual</span>
+                                </label>
+                                <input type="range" id="energySlider" class="lab-slider" min="0" max="100" value="100">
+
+                                <!-- Grafik SVG Diagram Tingkat Energi -->
+                                <svg id="energyChartSvg" viewBox="0 0 380 195" style="width:100%; height:auto; margin-top:0.85rem; display:block;" role="img" aria-label="Grafik perbandingan energi hidrogenasi sikloheksena, sikloheksatriena, dan benzena">
+                                    <line x1="36" y1="168" x2="355" y2="168" stroke="var(--border-subtle)" stroke-width="1.5"></line>
+                                    <text x="195" y="186" text-anchor="middle" fill="var(--text-muted)" font-size="10.5" font-family="Plus Jakarta Sans">Produk Akhir: Sikloheksana (C₆H₁₂) — Tingkat Energi Dasar</text>
+
+                                    <!-- Garis Level Sikloheksena (-120 kJ/mol) -->
+                                    <line x1="48" y1="122" x2="122" y2="122" stroke="var(--text-secondary)" stroke-width="2.5" stroke-linecap="round"></line>
+                                    <text x="85" y="114" text-anchor="middle" fill="var(--text-secondary)" font-size="10" font-family="JetBrains Mono">-120 kJ/mol</text>
+                                    <text x="85" y="136" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">Sikloheksena</text>
+
+                                    <!-- Garis Level Sikloheksatriena Hipotetis (-360 kJ/mol) -->
+                                    <line id="lineTriene" x1="150" y1="30" x2="238" y2="30" stroke="var(--accent-amber)" stroke-width="2.5" stroke-dasharray="5 3" stroke-linecap="round"></line>
+                                    <text id="textTriene" x="194" y="21" text-anchor="middle" fill="var(--accent-amber)" font-size="10" font-weight="700" font-family="JetBrains Mono">-360 kJ/mol</text>
+                                    <text x="194" y="44" text-anchor="middle" fill="var(--text-muted)" font-size="9.5">Sikloheksatriena</text>
+
+                                    <!-- Garis Level Benzena Nyata (-208 kJ/mol) -->
+                                    <line id="lineBenzene" x1="264" y1="88" x2="348" y2="88" stroke="var(--accent-mint)" stroke-width="3" stroke-linecap="round"></line>
+                                    <text id="textBenzene" x="306" y="79" text-anchor="middle" fill="var(--accent-mint)" font-size="10.5" font-weight="700" font-family="JetBrains Mono">-208 kJ/mol</text>
+                                    <text x="306" y="102" text-anchor="middle" fill="var(--text-primary)" font-size="10" font-weight="600">Benzena Nyata</text>
+
+                                    <!-- Panah Selisih Energi Stabilisasi 152 kJ/mol -->
+                                    <g id="resonanceGapGroup">
+                                        <line x1="250" y1="32" x2="250" y2="86" stroke="var(--accent-mint)" stroke-width="1.8"></line>
+                                        <polygon points="246,36 254,36 250,30" fill="var(--accent-mint)"></polygon>
+                                        <polygon points="246,82 254,82 250,88" fill="var(--accent-mint)"></polygon>
+                                        <rect x="196" y="51" width="108" height="18" rx="6" fill="var(--bg-elevated)" stroke="var(--accent-mint)" stroke-width="1"></rect>
+                                        <text x="250" y="63" text-anchor="middle" fill="var(--accent-mint)" font-size="9.5" font-weight="700" font-family="JetBrains Mono">ΔE = 152 kJ/mol</text>
+                                    </g>
+                                </svg>
+
+                                <p id="energyNote" style="font-size:0.81rem; color:var(--text-secondary); margin-top:0.5rem;">
+                                    Benzena melepaskan kalor <strong>152 kJ/mol lebih sedikit</strong> dari prediksi 3 ikatan rangkap biasa. Selisih ini adalah energi stabilisasi aromatik.
+                                </p>
+                            </div>
+
+                            <!-- Kartu Ringkasan Data Geometri -->
+                            <div class="glass-card" style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
+                                <div style="padding:0.65rem; border-radius:12px; background:var(--bg-subtle);">
+                                    <div style="font-size:0.72rem; color:var(--text-muted);">
+                                        <button type="button" class="glossary-term" data-term="hibridisasi">Hibridisasi</button> C
+                                    </div>
+                                    <div class="mono" style="font-weight:700; font-size:0.98rem; margin-top:2px;">sp² (Planar)</div>
+                                </div>
+                                <div style="padding:0.65rem; border-radius:12px; background:var(--bg-subtle);">
+                                    <div style="font-size:0.72rem; color:var(--text-muted);">Sudut Ikatan</div>
+                                    <div class="mono" style="font-weight:700; font-size:0.98rem; margin-top:2px;">120°</div>
+                                </div>
+                                <div style="padding:0.65rem; border-radius:12px; background:var(--bg-subtle);">
+                                    <div style="font-size:0.72rem; color:var(--text-muted);">Panjang C–C</div>
+                                    <div class="mono" style="font-weight:700; font-size:0.98rem; margin-top:2px; color:var(--accent-mint);">1,40 Å</div>
+                                </div>
+                                <div style="padding:0.65rem; border-radius:12px; background:var(--bg-subtle);">
+                                    <div style="font-size:0.72rem; color:var(--text-muted);">Panjang C–H</div>
+                                    <div class="mono" style="font-weight:700; font-size:0.98rem; margin-top:2px;">1,09 Å</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                     MODUL 2: TURUNAN BENZENA & PEMBANGUN TATA NAMA
+                     ============================================================ -->
+                <section id="mod-turunan" class="module-panel" role="tabpanel">
+                    <div class="section-eyebrow">Modul 02 • Senyawa Turunan & Nomenklatur</div>
+                    <h1 class="section-title">Galeri Turunan Benzena & Tata Nama</h1>
+                    <p class="section-lead">
+                        Penggantian satu atau lebih atom H oleh <button type="button" class="glossary-term" data-term="substituen">substituen</button> menghasilkan turunan benzena dengan sifat khas. Ketuk kartu molekul di bawah untuk membuka lembar detailnya.
+                    </p>
+
+                    <!-- Galeri 8 Molekul dengan Efek Kartu Miring 3D -->
+                    <div class="gallery-grid" id="derivativesGallery"></div>
+
+                    <!-- Pembangun Tata Nama Interaktif (Drag & Drop + Klik Aksesibel) -->
+                    <div class="glass-card">
+                        <div class="section-eyebrow">Studio Nomenklatur Disubstitusi</div>
+                        <h2 style="font-size:1.3rem; font-weight:700; margin-bottom:0.35rem;">Pembangun Tata Nama <em>Orto, Meta, Para</em></h2>
+                        <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:1.1rem;">
+                            Seret chip substituen (atau ketuk chip lalu ketuk lingkaran posisi C1–C6 pada cincin) untuk menyusun turunan benzena disubstitusi dan melihat penamaannya secara langsung.
+                        </p>
+
+                        <div class="nomenclature-grid">
+                            <!-- Kiri: Pool Substituen & Hasil Nama -->
+                            <div>
+                                <div style="font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">
+                                    Pilih / Seret Substituen ke Cincin:
+                                </div>
+                                <div class="sub-chip-pool" id="subChipPool" role="group" aria-label="Daftar Substituen"></div>
+
+                                <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.1rem;">
+                                    <button type="button" class="btn-action" id="btnPresetOrto" style="min-height:40px; font-size:0.78rem;">Contoh Orto (1,2)</button>
+                                    <button type="button" class="btn-action" id="btnPresetMeta" style="min-height:40px; font-size:0.78rem;">Contoh Meta (1,3)</button>
+                                    <button type="button" class="btn-action" id="btnPresetPara" style="min-height:40px; font-size:0.78rem;">Contoh Para (1,4)</button>
+                                    <button type="button" class="btn-action" id="btnClearRing" style="min-height:40px; font-size:0.78rem;">Kosongkan</button>
+                                </div>
+
+                                <!-- Kartu Output Nama Real-Time -->
+                                <div id="nomenclatureOutput" style="padding:1.1rem; border-radius:var(--radius-md); background:var(--bg-subtle); border:1px solid var(--border-active);">
+                                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
+                                        <span class="mono" id="nomRelationBadge" style="font-size:0.74rem; font-weight:700; color:var(--accent-mint);">POSISI ORTO (1,2)</span>
+                                        <span class="mono" id="nomFormulaBadge" style="font-size:0.78rem; color:var(--text-secondary);">C₆H₄(OH)Cl</span>
+                                    </div>
+                                    <div id="nomMainName" class="display-font" style="font-size:1.35rem; font-weight:700; color:var(--text-primary);">
+                                        o-klorofenol
+                                    </div>
+                                    <div id="nomAltName" style="font-size:0.86rem; font-weight:600; color:var(--accent-amber); margin-top:0.15rem;">
+                                        Penomoran IUPAC: 2-klorofenol
+                                    </div>
+                                    <p id="nomExplanation" style="font-size:0.81rem; color:var(--text-secondary); margin-top:0.6rem; padding-top:0.6rem; border-top:1px dashed var(--border-subtle);">
+                                        Gugus -OH berprioritas lebih tinggi daripada -Cl sehingga menjadi induk fenol (C1), dan -Cl berada pada posisi C2 (orto).
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Kanan: Cincin Benzena Target Drop C1–C6 -->
+                            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0.75rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle); background:var(--bg-subtle);">
+                                <svg id="nomenclatureRingSvg" viewBox="0 0 340 340" style="width:100%; max-width:320px; height:auto;" role="img" aria-label="Cincin benzena interaktif posisi C1 hingga C6">
+                                    <!-- Ikatan Cincin -->
+                                    <polygon points="170,95 235,132.5 235,207.5 170,245 105,207.5 105,132.5" fill="none" stroke="var(--text-secondary)" stroke-width="3"></polygon>
+                                    <circle cx="170" cy="170" r="42" fill="none" stroke="var(--accent-mint)" stroke-width="2" stroke-dasharray="5 4"></circle>
+                                    <g id="dropSlotsGroup"></g>
+                                </svg>
+                                <span style="font-size:0.76rem; color:var(--text-muted); text-align:center;">
+                                    Maksimal 2 substituen aktif pada cincin untuk simulasi tata nama disubstitusi.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                     MODUL 3: REAKSI SUBSTITUSI ELEKTROFILIK
+                     ============================================================ -->
+                <section id="mod-reaksi" class="module-panel" role="tabpanel">
+                    <div class="section-eyebrow">Modul 03 • Mekanisme & Kinetika</div>
+                    <h1 class="section-title">Substitusi Elektrofilik Aromatik</h1>
+                    <p class="section-lead">
+                        Benzena mempertahankan kestabilan aromatiknya dengan mengganti atom H oleh <button type="button" class="glossary-term" data-term="elektrofil">elektrofil</button> melalui zat antara <button type="button" class="glossary-term" data-term="arenium">ion arenium</button>. Geser timeline reaksi untuk mengamati tahap demi tahap.
+                    </p>
+
+                    <div class="glass-card">
+                        <!-- Pilihan 5 Jenis Reaksi -->
+                        <div class="segmented-group" id="rxTabsGroup" role="tablist" aria-label="Pilih Jenis Reaksi Benzena" style="margin-bottom:1rem;"></div>
+
+                        <!-- Persamaan Reaksi Ringkas -->
+                        <div id="rxEquationStrip" style="padding:0.85rem 1rem; border-radius:var(--radius-md); background:var(--bg-subtle); border:1px solid var(--border-subtle); display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0.75rem; font-weight:700; margin-bottom:1rem;"></div>
+
+                        <!-- Kontrol Scrubber Timeline 0–100% -->
+                        <div style="display:flex; align-items:center; gap:0.85rem; flex-wrap:wrap; margin-bottom:0.5rem;">
+                            <button type="button" class="btn-action primary" id="btnPlayRx" style="min-width:118px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                <span id="btnPlayRxLabel">Putar Tahap</span>
+                            </button>
+                            <div style="flex:1; min-width:200px;">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted); margin-bottom:4px;">
+                                    <span>1. Elektrofil Mendekat</span>
+                                    <span>2. Ion Arenium</span>
+                                    <span>3. Produk Stabil</span>
+                                </div>
+                                <input type="range" id="rxTimelineSlider" class="lab-slider" min="0" max="100" value="0" aria-label="Timeline jalannya reaksi">
+                            </div>
+                        </div>
+
+                        <div class="rx-grid">
+                            <!-- Kiri: Visualisasi Mekanisme Molekul -->
+                            <div>
+                                <div class="stage-box">
+                                    <svg id="rxMechanismSvg" viewBox="0 0 460 210" style="width:100%; height:auto;" role="img" aria-label="Animasi mekanisme substitusi elektrofilik"></svg>
+                                </div>
+                                <div style="margin-top:0.85rem;">
+                                    <span class="mono" id="rxPhaseBadge" style="font-size:0.74rem; font-weight:700; color:var(--accent-mint);">TAHAP 1 DARI 3</span>
+                                    <h3 id="rxPhaseTitle" style="font-size:1.05rem; font-weight:700; margin:0.2rem 0;">Pembentukan & Pendekatan Elektrofil</h3>
+                                    <p id="rxPhaseDesc" style="font-size:0.85rem; color:var(--text-secondary);"></p>
+                                </div>
+                            </div>
+
+                            <!-- Kanan: Grafik Profil Energi Reaksi (Self-Drawing) -->
+                            <div style="display:flex; flex-direction:column; justify-content:space-between; padding:1rem; border-radius:var(--radius-md); border:1px solid var(--border-subtle); background:var(--bg-subtle);">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                    <span style="font-size:0.84rem; font-weight:700;">Profil Energi Potensial</span>
+                                    <span class="mono" style="font-size:0.72rem; color:var(--accent-amber);">ΔH &lt; 0 (Eksoterm)</span>
+                                </div>
+                                <svg id="rxEnergySvg" viewBox="0 0 360 205" style="width:100%; height:auto;" role="img" aria-label="Kurva energi potensial terhadap koordinat reaksi">
+                                    <line x1="34" y1="15" x2="34" y2="178" stroke="var(--text-muted)" stroke-width="1.3"></line>
+                                    <line x1="34" y1="178" x2="345" y2="178" stroke="var(--text-muted)" stroke-width="1.3"></line>
+                                    <text x="14" y="96" transform="rotate(-90 14 96)" text-anchor="middle" fill="var(--text-muted)" font-size="10">Energi Potensial</text>
+                                    <text x="190" y="196" text-anchor="middle" fill="var(--text-muted)" font-size="10">Koordinat Reaksi →</text>
+
+                                    <!-- Kurva Jejak Latar -->
+                                    <path d="M 44 128 C 85 128, 112 34, 145 34 C 168 34, 178 68, 195 68 C 212 68, 224 46, 245 46 C 275 46, 290 152, 336 152" fill="none" stroke="var(--border-subtle)" stroke-width="3" stroke-linecap="round"></path>
+
+                                    <!-- Kurva Aktif yang Menggambar Dirinya -->
+                                    <path id="rxEnergyCurveActive" d="M 44 128 C 85 128, 112 34, 145 34 C 168 34, 178 68, 195 68 C 212 68, 224 46, 245 46 C 275 46, 290 152, 336 152" fill="none" stroke="var(--accent-mint)" stroke-width="3.5" stroke-linecap="round"></path>
+
+                                    <!-- Titik Penanda Posisi Reaksi Saat Ini -->
+                                    <circle id="rxEnergyDot" cx="44" cy="128" r="6" fill="var(--accent-amber)" stroke="var(--bg-base)" stroke-width="2"></circle>
+
+                                    <text x="64" y="118" fill="var(--text-secondary)" font-size="9.5" font-family="JetBrains Mono">Reaktan</text>
+                                    <text x="195" y="84" text-anchor="middle" fill="var(--accent-amber)" font-size="9.5" font-weight="700">Ion Arenium</text>
+                                    <text x="312" y="142" text-anchor="middle" fill="var(--accent-mint)" font-size="9.5" font-weight="700">Produk</text>
+                                </svg>
+                                <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0.35rem;">
+                                    Puncak tertinggi (Ea₁) adalah tahap penentu laju saat cincin kehilangan aromatisitas sementara membentuk ion arenium.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Perbandingan Pengarah Orto/Para vs Meta -->
+                    <div class="director-compare">
+                        <div class="glass-card" style="border-color: rgba(0, 229, 168, 0.28);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                                <span class="mono" style="font-size:0.74rem; font-weight:700; color:var(--accent-mint);">PENGARAH ORTO / PARA</span>
+                                <span class="mono" style="font-size:0.78rem; padding:2px 8px; border-radius:6px; background:var(--accent-mint-dim); color:var(--accent-mint);">Contoh: -OH (Fenol)</span>
+                            </div>
+                            <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:0.75rem;">
+                                Gugus berpasangan elektron bebas (-OH, -NH₂) atau alkil (-CH₃) mendonorkan kerapatan elektron ke posisi <strong>2 (orto)</strong> dan <strong>4 (para)</strong> sehingga elektrofil masuk ke posisi tersebut.
+                            </p>
+                            <svg viewBox="0 0 260 115" style="width:100%; max-height:115px;">
+                                <polygon points="75,32 108,51 108,89 75,108 42,89 42,51" fill="none" stroke="var(--text-secondary)" stroke-width="2.2"></polygon>
+                                <circle cx="75" cy="70" r="18" fill="none" stroke="var(--accent-mint)" stroke-width="1.8" stroke-dasharray="4 3"></circle>
+                                <text x="75" y="22" text-anchor="middle" fill="var(--accent-mint)" font-family="JetBrains Mono" font-size="11" font-weight="700">-OH</text>
+                                <!-- Titik kaya elektron δ- di posisi orto & para -->
+                                <circle cx="108" cy="51" r="6" fill="var(--accent-mint)"></circle>
+                                <text x="122" y="54" fill="var(--accent-mint)" font-family="JetBrains Mono" font-size="10" font-weight="700">δ⁻ (orto)</text>
+                                <circle cx="75" cy="108" r="6" fill="var(--accent-mint)"></circle>
+                                <text x="122" y="109" fill="var(--accent-mint)" font-family="JetBrains Mono" font-size="10" font-weight="700">δ⁻ (para)</text>
+                            </svg>
+                        </div>
+
+                        <div class="glass-card" style="border-color: rgba(245, 158, 11, 0.28);">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                                <span class="mono" style="font-size:0.74rem; font-weight:700; color:var(--accent-amber);">PENGARAH META</span>
+                                <span class="mono" style="font-size:0.78rem; padding:2px 8px; border-radius:6px; background:var(--accent-amber-dim); color:var(--accent-amber);">Contoh: -NO₂ (Nitrobenzena)</span>
+                            </div>
+                            <p style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:0.75rem;">
+                                Gugus penarik elektron kuat (-NO₂, -COOH, -CHO) menyedot elektron dari posisi orto dan para (menjadi parsial positif δ⁺), sehingga posisi <strong>3 (meta)</strong> relatif lebih kaya elektron.
+                            </p>
+                            <svg viewBox="0 0 260 115" style="width:100%; max-height:115px;">
+                                <polygon points="75,32 108,51 108,89 75,108 42,89 42,51" fill="none" stroke="var(--text-secondary)" stroke-width="2.2"></polygon>
+                                <circle cx="75" cy="70" r="18" fill="none" stroke="var(--accent-amber)" stroke-width="1.8" stroke-dasharray="4 3"></circle>
+                                <text x="75" y="22" text-anchor="middle" fill="var(--accent-amber)" font-family="JetBrains Mono" font-size="11" font-weight="700">-NO₂</text>
+                                <text x="118" y="52" fill="var(--danger)" font-family="JetBrains Mono" font-size="9.5">δ⁺</text>
+                                <circle cx="108" cy="89" r="6" fill="var(--accent-amber)"></circle>
+                                <text x="122" y="92" fill="var(--accent-amber)" font-family="JetBrains Mono" font-size="10" font-weight="700">Target (meta)</text>
+                            </svg>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                     MODUL 4: KUIS EVALUASI INTERAKTIF
+                     ============================================================ -->
+                <section id="mod-kuis" class="module-panel" role="tabpanel">
+                    <div class="quiz-shell">
+                        <div class="section-eyebrow">Modul 04 • Uji Pemahaman</div>
+                        <h1 class="section-title">Evaluasi Kompetensi Benzena</h1>
+                        <p class="section-lead">10 soal acak mencakup struktur, tata nama, reaksi substitusi, dan kegunaan senyawa turunan benzena.</p>
+
+                        <!-- Kartu Soal Aktif -->
+                        <div class="glass-card" id="quizQuestionCard">
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem; padding-bottom:0.85rem; border-bottom:1px solid var(--border-subtle);">
+                                <span class="mono" id="quizStepCounter" style="font-size:0.82rem; font-weight:700; color:var(--accent-mint);">SOAL 01 / 10</span>
+
+                                <div style="display:flex; align-items:center; gap:0.65rem;">
+                                    <label style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:var(--text-secondary); cursor:pointer; min-height:36px;">
+                                        <input type="checkbox" id="toggleQuizTimer" style="accent-color:var(--accent-mint); width:16px; height:16px;">
+                                        <span>Timer 30d</span>
+                                    </label>
+                                    <span id="quizTimerDisplay" class="mono" style="display:none; font-size:0.82rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:8px; background:var(--accent-amber-dim); color:var(--accent-amber);">00:30</span>
+                                </div>
+                            </div>
+
+                            <div id="quizCategoryTag" class="mono" style="font-size:0.72rem; color:var(--text-muted); text-transform:uppercase; margin-bottom:0.35rem;">KATEGORI</div>
+                            <h2 id="quizPrompt" style="font-family:var(--font-sans); font-size:1.06rem; font-weight:600; line-height:1.55; margin-bottom:1.15rem;">
+                                Memuat pertanyaan...
+                            </h2>
+
+                            <div id="quizOptionsList" role="radiogroup" aria-label="Pilihan Jawaban"></div>
+
+                            <!-- Kotak Umpan Balik Jawaban -->
+                            <div id="quizFeedback" style="display:none; margin-top:1rem; padding:0.95rem; border-radius:var(--radius-md); font-size:0.86rem; line-height:1.55;"></div>
+
+                            <div style="display:flex; justify-content:flex-end; margin-top:1.15rem;">
+                                <button type="button" class="btn-action primary" id="btnNextQuiz" style="display:none;">Lanjut Soal Berikutnya</button>
+                            </div>
+                        </div>
+
+                        <!-- Kartu Hasil Akhir Kuis -->
+                        <div class="glass-card" id="quizSummaryCard" style="display:none; text-align:center; padding:2.25rem 1.5rem;">
+                            <div id="badgeTitle" class="section-eyebrow" style="justify-content:center; font-size:0.82rem;">LENCANA PENCAPAIAN</div>
+                            <h2 id="badgeHeadline" class="display-font" style="font-size:1.65rem; font-weight:700; margin-bottom:1.25rem;">Ahli Kimia Aromatik</h2>
+
+                            <!-- Ring Progress Animasi Skor Akhir -->
+                            <div style="position:relative; width:148px; height:148px; margin:0 auto 1.25rem;">
+                                <svg viewBox="0 0 120 120" style="width:148px; height:148px; transform:rotate(-90deg);">
+                                    <circle cx="60" cy="60" r="50" fill="none" stroke="var(--border-subtle)" stroke-width="9"></circle>
+                                    <circle id="finalScoreRing" cx="60" cy="60" r="50" fill="none" stroke="var(--accent-mint)" stroke-width="9" stroke-linecap="round" stroke-dasharray="314.16" stroke-dashoffset="314.16" style="transition: stroke-dashoffset 1s var(--ease-spring);"></circle>
+                                </svg>
+                                <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                                    <span id="finalScoreNumber" class="mono" style="font-size:2rem; font-weight:700; line-height:1;">0</span>
+                                    <span style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Skor Akhir</span>
+                                </div>
+                            </div>
+
+                            <p id="finalScoreText" style="color:var(--text-secondary); font-size:0.94rem; max-width:440px; margin:0 auto 1.5rem;"></p>
+
+                            <button type="button" class="btn-action primary" id="btnRetryQuiz">Ulangi Kuis (Acak Soal Baru)</button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Tab Bar Bawah Khusus Mobile -->
+    <nav class="mobile-tabbar" role="tablist" aria-label="Navigasi Modul Mobile">
+        <button type="button" class="mobile-tab-btn active" data-module="mod-struktur">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7 12 2"/><circle cx="12" cy="12" r="4"/></svg>
+            <span>Struktur</span>
+        </button>
+        <button type="button" class="mobile-tab-btn" data-module="mod-turunan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><circle cx="17.5" cy="17.5" r="3.5"/></svg>
+            <span>Turunan</span>
+        </button>
+        <button type="button" class="mobile-tab-btn" data-module="mod-reaksi">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h6M10 3v5.5L4.5 18a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 8.5V3"/></svg>
+            <span>Reaksi</span>
+        </button>
+        <button type="button" class="mobile-tab-btn" data-module="mod-kuis">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Kuis</span>
+        </button>
+    </nav>
+
+    <!-- ======================================================================
+         3. POPOVER GLOSARIUM & BOTTOM SHEET DETAIL SENYAWA
+         ====================================================================== -->
+    <div id="glossaryPopover" role="dialog" aria-live="polite">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
+            <span class="mono" style="font-size:0.7rem; font-weight:700; color:var(--accent-mint); text-transform:uppercase;">Glosarium Kimia</span>
+            <button type="button" id="btnClosePopover" aria-label="Tutup glosarium" style="background:none; border:none; color:var(--text-muted); cursor:pointer; min-width:30px; min-height:30px;">✕</button>
+        </div>
+        <div id="popTermTitle" style="font-weight:700; font-size:0.95rem; margin-bottom:0.25rem;">Istilah</div>
+        <p id="popTermDesc" style="font-size:0.82rem; color:var(--text-secondary); line-height:1.5;"></p>
+    </div>
+
+    <div id="sheetBackdrop"></div>
+    <aside id="detailSheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <div style="padding:1.25rem 1.35rem; border-bottom:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <div id="sheetSubtitle" class="mono" style="font-size:0.74rem; color:var(--accent-mint); font-weight:700;">GUGUS FUNGSI</div>
+                <h2 id="sheetTitle" style="font-size:1.3rem; font-weight:700;">Nama Senyawa</h2>
+            </div>
+            <button type="button" class="btn-action" id="btnCloseSheet" style="min-height:44px; min-width:44px;">Tutup</button>
+        </div>
+        <div id="sheetContent" style="padding:1.25rem 1.35rem 1.75rem;"></div>
+    </aside>
+
+    <script>
+        /**
+         * ==========================================================================
+         * DATA KIMIA TERSTRUKTUR (KURIKULUM SMA KELAS XII)
+         * ==========================================================================
+         */
+        const GLOSSARY_DATA = {
+            aromatik: {
+                title: 'Senyawa Aromatik',
+                desc: 'Senyawa siklik datar terkonjugasi penuh yang memiliki kestabilan tinggi karena memiliki (4n + 2) elektron π terdelokalisasi (aturan Hückel, n = 1 → 6 elektron π pada benzena).'
+            },
+            resonansi: {
+                title: 'Resonansi',
+                desc: 'Delokalisasi elektron π di antara beberapa ikatan kovalen sehingga struktur sebenarnya merupakan hibrida rata-rata dari dua struktur Kekulé dengan energi lebih rendah.'
+            },
+            hibridisasi: {
+                title: 'Hibridisasi sp²',
+                desc: 'Percampuran 1 orbital s dan 2 orbital p pada tiap atom C benzena membentuk 3 orbital hibrida sp² datar bersudut 120°, menyisakan 1 orbital p tegak lurus untuk cincin π.'
+            },
+            substituen: {
+                title: 'Substituen',
+                desc: 'Atom atau gugus atom (seperti -OH, -CH₃, -NO₂, -Cl) yang menggantikan posisi atom hidrogen pada cincin benzena.'
+            },
+            elektrofil: {
+                title: 'Elektrofil (Pencinta Elektron)',
+                desc: 'Ion bermuatan positif atau molekul kekurangan elektron (seperti NO₂⁺, Cl⁺, CH₃⁺) yang tertarik menyerang awan elektron π benzena.'
+            },
+            arenium: {
+                title: 'Ion Arenium (Kompleks σ)',
+                desc: 'Zat antara karbokation siklik tidak stabil yang terbentuk sementara saat elektrofil berikatan dengan salah satu atom C benzena sebelum melepaskan H⁺.'
+            }
+        };
+
+        const DERIVATIVES_DATA = [
+            {
+                id: 'toluena',
+                name: 'Toluena',
+                iupac: 'Metilbenzena',
+                formula: 'C₆H₅CH₃',
+                group: '-CH₃ (Alkil / Metil)',
+                atomColor: '#64748b',
+                chip: 'CH₃',
+                props: 'Cairan tak berwarna, titik didih 110,6 °C, berbau khas pelarut, tidak larut dalam air tetapi larut dalam pelarut organik.',
+                uses: 'Pelarut cat dan resin (thinner), bahan baku pembuatan bahan peledak TNT (2,4,6-trinitrotoluena), serta sintesis asam benzoat.',
+                fact: 'Toluena jauh lebih rendah tingkat toksisitasnya dibanding benzena murni karena enzim hati dapat mengoksidasi gugus -CH₃ menjadi asam benzoat yang mudah dikeluarkan tubuh.'
+            },
+            {
+                id: 'fenol',
+                name: 'Fenol',
+                iupac: 'Hidroksibenzena',
+                formula: 'C₆H₅OH',
+                group: '-OH (Hidroksil)',
+                atomColor: '#ef4444',
+                chip: 'OH',
+                props: 'Padatan kristal putih higroskopis, titik leleh 40,5 °C, bersifat asam lemah (memerahkan lakmus biru), korosif terhadap kulit.',
+                uses: 'Antiseptik dan disinfektan (karbol), bahan baku pembuatan plastik termoset bakelit, serta zat antara obat aspirin.',
+                fact: 'Fenol bersifat jauh lebih asam daripada etanol karena ion fenoksida (C₆H₅O⁻) yang terbentuk distabilkan oleh resonansi ke dalam cincin benzena.'
+            },
+            {
+                id: 'anilina',
+                name: 'Anilina',
+                iupac: 'Aminobenzena',
+                formula: 'C₆H₅NH₂',
+                group: '-NH₂ (Amino)',
+                atomColor: '#3b82f6',
+                chip: 'NH₂',
+                props: 'Cairan berminyak tak berwarna yang mudah teroksidasi menjadi cokelat kemerahan di udara, titik didih 184 °C, bersifat basa lemah.',
+                uses: 'Bahan baku utama industri zat pewarna tekstil (pewarna diazo), pembuatan busa poliuretana, dan sintesis obat parasetamol.',
+                fact: 'Kebasaan anilina lebih lemah daripada amonia (NH₃) karena pasangan elektron bebas pada atom N tertarik masuk ke cincin aromatik.'
+            },
+            {
+                id: 'asam_benzoat',
+                name: 'Asam Benzoat',
+                iupac: 'Asam Benzenakarboksilat',
+                formula: 'C₆H₅COOH',
+                group: '-COOH (Karboksil)',
+                atomColor: '#ef4444',
+                chip: 'COOH',
+                props: 'Kristal padat putih berbentuk jarum halus, titik leleh 122 °C, sukar larut dalam air dingin tetapi larut dalam air panas.',
+                uses: 'Pengawet makanan dan minuman ringan (umumnya sebagai garam natrium benzoat, C₆H₅COONa) untuk menghambat pertumbuhan jamur dan bakteri.',
+                fact: 'Gugus -COOH menempati urutan prioritas tertinggi dalam tata nama benzena SMA sehingga selalu diberi nomor C1.'
+            },
+            {
+                id: 'nitrobenzena',
+                name: 'Nitrobenzena',
+                iupac: 'Nitrobenzena',
+                formula: 'C₆H₅NO₂',
+                group: '-NO₂ (Nitro)',
+                atomColor: '#3b82f6',
+                chip: 'NO₂',
+                props: 'Cairan berminyak berwarna kuning pucat, titik didih 210,9 °C, beraroma tajam menyerupai minyak almond pahit, beracun.',
+                uses: 'Bahan antara utama untuk memproduksi anilina melalui reduksi, serta campuran semir sepatu dan pelarut industri.',
+                fact: 'Gugus -NO₂ adalah penarik elektron kuat yang mendeaktivasi cincin dan mengarahkan substituen kedua ke posisi meta (1,3).'
+            },
+            {
+                id: 'benzaldehida',
+                name: 'Benzaldehida',
+                iupac: 'Benzenakarbaldehida',
+                formula: 'C₆H₅CHO',
+                group: '-CHO (Aldehida)',
+                atomColor: '#ef4444',
+                chip: 'CHO',
+                props: 'Cairan tak berwarna dengan aroma khas kacang almond alami, titik didih 178,1 °C, mudah teroksidasi menjadi asam benzoat di udara.',
+                uses: 'Zat pemberi aroma (perisa) almond pada makanan dan kue, campuran parfum, serta bahan baku zat warna.',
+                fact: 'Benzaldehida merupakan komponen utama minyak atsiri yang diekstrak dari biji buah almond pahit.'
+            },
+            {
+                id: 'stirena',
+                name: 'Stirena',
+                iupac: 'Etenilbenzena / Vinilbenzena',
+                formula: 'C₆H₅CH=CH₂',
+                group: '-CH=CH₂ (Vinil)',
+                atomColor: '#64748b',
+                chip: 'CH=CH₂',
+                props: 'Cairan berminyak tak berwarna yang mudah menguap dan berbau manis khas, titik didih 145 °C, mudah berpolimerisasi.',
+                uses: 'Monomer pembuatan plastik polistirena (PS), kemasan makanan styrofoam, dan karet sintetis SBR untuk ban kendaraan.',
+                fact: 'Reaksi polimerisasi adisi terjadi pada ikatan rangkap gugus vinilnya tanpa mengganggu cincin benzena.'
+            },
+            {
+                id: 'klorobenzena',
+                name: 'Klorobenzena',
+                iupac: 'Klorobenzena',
+                formula: 'C₆H₅Cl',
+                group: '-Cl (Halida / Kloro)',
+                atomColor: '#22c55e',
+                chip: 'Cl',
+                props: 'Cairan jernih tak berwarna, mudah terbakar, titik didih 131 °C, tidak larut dalam air, massa jenis lebih besar dari air (1,11 g/cm³).',
+                uses: 'Pelarut industri bertitik didih tinggi, bahan baku pembuatan fenol pada proses Dow, dan zat antara industri kimia.',
+                fact: 'Ikatan C–Cl pada klorobenzena jauh lebih kuat daripada alkil klorida biasa karena adanya karakter ikatan rangkap parsial.'
+            }
+        ];
+
+        // Konfigurasi Substituen untuk Pembangun Tata Nama (Prioritas SMA: -COOH > -CHO > -OH > -NH2 > -CH3 > -Cl > -NO2)
+        const NOM_SUBSTITUENTS = [
+            { id: '-COOH', label: '-COOH', priority: 1, parent: 'asam benzoat', prefix: 'karboksi', isAcid: true, color: '#ef4444' },
+            { id: '-CHO',  label: '-CHO',  priority: 2, parent: 'benzaldehida', prefix: 'formil',   isAcid: false, color: '#f59e0b' },
+            { id: '-OH',   label: '-OH',   priority: 3, parent: 'fenol',        prefix: 'hidroksi', isAcid: false, color: '#ef4444' },
+            { id: '-NH2',  label: '-NH₂',  priority: 4, parent: 'anilina',      prefix: 'amino',    isAcid: false, color: '#3b82f6' },
+            { id: '-CH3',  label: '-CH₃',  priority: 5, parent: 'toluena',      prefix: 'metil',    isAcid: false, color: '#64748b' },
+            { id: '-Cl',   label: '-Cl',   priority: 6, parent: 'klorobenzena', prefix: 'kloro',    isAcid: false, color: '#22c55e' },
+            { id: '-NO2',  label: '-NO₂',  priority: 7, parent: 'nitrobenzena', prefix: 'nitro',    isAcid: false, color: '#3b82f6' }
+        ];
+
+        const REACTIONS_DATA = [
+            {
+                id: 'nitrasi',
+                label: 'Nitrasi',
+                reactant: 'HNO₃ (pekat)',
+                catalyst: 'H₂SO₄ pekat, 50 °C',
+                product: 'Nitrobenzena (C₆H₅NO₂)',
+                byproduct: 'H₂O',
+                electrophile: 'NO₂⁺',
+                groupLabel: 'NO₂',
+                phases: [
+                    { title: 'Tahap 1: Pembentukan Elektrofil Ion Nitronium (NO₂⁺)', desc: 'Asam sulfat pekat memprotonasi HNO₃ dan melepaskan H₂O, menghasilkan ion nitronium (NO₂⁺) yang mendekati awan elektron π benzena.' },
+                    { title: 'Tahap 2: Pembentukan Ion Arenium (Kompleks σ)', desc: 'Sepasang elektron π menyerang NO₂⁺ membentuk ikatan C–N baru. Sistem lingkaran π terputus sementara menjadi kation arenium.' },
+                    { title: 'Tahap 3: Deprotonasi & Pemulihan Cincin Aromatik', desc: 'Ion HSO₄⁻ menarik proton H⁺ sehingga elektron ikatan C–H kembali membentuk lingkaran π stabil, menghasilkan Nitrobenzena.' }
+                ]
+            },
+            {
+                id: 'halogenasi',
+                label: 'Halogenasi',
+                reactant: 'Cl₂',
+                catalyst: 'FeCl₃ anhidrat',
+                product: 'Klorobenzena (C₆H₅Cl)',
+                byproduct: 'HCl',
+                electrophile: 'Cl⁺',
+                groupLabel: 'Cl',
+                phases: [
+                    { title: 'Tahap 1: Polarisasi Cl₂ oleh Katalis Asam Lewis FeCl₃', desc: 'Katalis FeCl₃ menarik pasangan elektron dari molekul Cl₂ nonpolar sehingga terbentuk spesi elektrofilik Cl⁺.' },
+                    { title: 'Tahap 2: Serangan Elektron π pada Cl⁺', desc: 'Awan elektron π benzena menyerang atom klorin positif membentuk ikatan C–Cl dan zat antara ion arenium.' },
+                    { title: 'Tahap 3: Pelepasan H⁺ & Regenerasi Katalis', desc: 'Ion [FeCl₄]⁻ mengambil proton H⁺ menghasilkan Klorobenzena, gas HCl, dan katalis FeCl₃ utuh kembali.' }
+                ]
+            },
+            {
+                id: 'sulfonasi',
+                label: 'Sulfonasi',
+                reactant: 'H₂SO₄ berasap',
+                catalyst: 'SO₃ / H₂SO₄ pekat',
+                product: 'Asam Benzenasulfonat (C₆H₅SO₃H)',
+                byproduct: 'H₂O',
+                electrophile: 'SO₃',
+                groupLabel: 'SO₃H',
+                phases: [
+                    { title: 'Tahap 1: Aktivasi Elektrofil Belerang Trioksida (SO₃)', desc: 'Molekul SO₃ netral memiliki atom S yang sangat kekurangan elektron akibat tarikan tiga atom oksigen elektronegatif.' },
+                    { title: 'Tahap 2: Pembentukan Ikatan C–S (Ion Arenium)', desc: 'Elektron π cincin menyerang atom sulfur pada SO₃ membentuk zat antara ion arenium bermuatan positif.' },
+                    { title: 'Tahap 3: Transfer Proton Menjadi Asam Benzenasulfonat', desc: 'Pelepasan H⁺ memulihkan lingkaran aromatik cincin dan memprotonasi gugus sulfonat menjadi C₆H₅SO₃H.' }
+                ]
+            },
+            {
+                id: 'alkilasi',
+                label: 'Alkilasi FC',
+                reactant: 'CH₃Cl',
+                catalyst: 'AlCl₃ anhidrat',
+                product: 'Toluena (C₆H₅CH₃)',
+                byproduct: 'HCl',
+                electrophile: 'CH₃⁺',
+                groupLabel: 'CH₃',
+                phases: [
+                    { title: 'Tahap 1: Pembentukan Karbokation Metil (CH₃⁺)', desc: 'Katalis AlCl₃ menarik ion Cl⁻ dari klorometana (CH₃Cl), menghasilkan elektrofil karbokation CH₃⁺ dan [AlCl₄]⁻.' },
+                    { title: 'Tahap 2: Pembentukan Ikatan Karbon–Karbon Baru', desc: 'Awan elektron π benzena menyerang karbokation CH₃⁺ membentuk ikatan C–C dan zat antara ion arenium.' },
+                    { title: 'Tahap 3: Deprotonasi Menghasilkan Toluena', desc: 'Pelepasan H⁺ oleh [AlCl₄]⁻ mengembalikan kestabilan aromatik cincin menghasilkan Toluena dan gas HCl.' }
+                ]
+            },
+            {
+                id: 'asilasi',
+                label: 'Asilasi FC',
+                reactant: 'CH₃COCl',
+                catalyst: 'AlCl₃ anhidrat',
+                product: 'Asetofenon (C₆H₅COCH₃)',
+                byproduct: 'HCl',
+                electrophile: 'CH₃CO⁺',
+                groupLabel: 'COCH₃',
+                phases: [
+                    { title: 'Tahap 1: Pembentukan Ion Asilium (CH₃CO⁺)', desc: 'Katalis AlCl₃ memutus ikatan C–Cl pada asetil klorida (CH₃COCl), menghasilkan elektrofil ion asilium yang terstabilkan resonansi.' },
+                    { title: 'Tahap 2: Serangan Cincin ke Karbon Karbonil', desc: 'Elektron π benzena menyerang atom karbon positif pada ion asilium membentuk kompleks sigma ion arenium.' },
+                    { title: 'Tahap 3: Pemulihan Aromatik Menjadi Asetofenon', desc: 'Ion H⁺ dilepaskan untuk memulihkan sistem lingkaran π, menghasilkan keton aromatik Asetofenon.' }
+                ]
+            }
+        ];
+
+        const QUIZ_QUESTIONS = [
+            {
+                category: 'Struktur & Ikatan',
+                prompt: 'Seluruh ikatan karbon–karbon (C–C) dalam molekul benzena memiliki panjang seragam sebesar 1,40 Å (berada di antara ikatan tunggal 1,54 Å dan rangkap 1,34 Å). Hal ini membuktikan bahwa...',
+                options: [
+                    'Keenam elektron π terdelokalisasi merata melalui resonansi',
+                    'Atom karbon benzena mengalami hibridisasi sp³ tetrahedral',
+                    'Benzena merupakan campuran kesetimbangan sikloheksana dan heksena',
+                    'Ikatan C–H menarik elektron ikatan C–C secara simetris'
+                ],
+                answer: 0,
+                explain: 'Delokalisasi 6 elektron π menghasilkan hibrida resonansi dengan orde ikatan 1,5 di seluruh sisi heksagon sehingga panjangnya identik 1,40 Å.'
+            },
+            {
+                category: 'Geometri Molekul',
+                prompt: 'Hibridisasi atom karbon dan besar sudut ikatan C–C–C pada cincin benzena berturut-turut adalah...',
+                options: [
+                    'sp³ dan 109,5°',
+                    'sp² dan 120°',
+                    'sp dan 180°',
+                    'sp² dan 109,5°'
+                ],
+                answer: 1,
+                explain: 'Setiap atom C mengikat 3 atom lain dalam satu bidang datar dengan hibridisasi sp² dan sudut 120°.'
+            },
+            {
+                category: 'Energi Stabilisasi',
+                prompt: 'Kalor hidrogenasi teoretis 1,3,5-sikloheksatriena adalah -360 kJ/mol, sedangkan benzena nyata hanya melepas -208 kJ/mol. Selisih 152 kJ/mol tersebut menunjukkan...',
+                options: [
+                    'Energi aktivasi pemutusan ikatan C–H',
+                    'Energi stabilisasi resonansi cincin aromatik benzena',
+                    'Kalor penguapan benzena pada tekanan 1 atm',
+                    'Energi ionisasi pertama atom karbon sp²'
+                ],
+                answer: 1,
+                explain: 'Benzena memiliki tingkat energi 152 kJ/mol lebih rendah (lebih stabil) dibanding molekul hipotetis dengan 3 ikatan rangkap terisolasi.'
+            },
+            {
+                category: 'Tata Nama Benzena',
+                prompt: 'Senyawa turunan benzena yang mengikat gugus -COOH pada atom C1 dan gugus -OH pada atom C2 memiliki nama IUPAC...',
+                options: [
+                    '2-karboksifenol',
+                    'Asam 2-hidroksibenzoat',
+                    'Asam 3-hidroksibenzoat',
+                    'o-hidroksibenzaldehida'
+                ],
+                answer: 1,
+                explain: 'Gugus -COOH berprioritas lebih tinggi dari -OH sehingga menjadi gugus induk asam benzoat (C1), sedangkan -OH di C2 menjadi awalan hidroksi.'
+            },
+            {
+                category: 'Tata Nama Benzena',
+                prompt: 'Pada cincin benzena disubstitusi, dua gugus substituen yang terikat pada posisi atom karbon nomor 1 dan 4 dinyatakan dengan awalan...',
+                options: [
+                    'Orto (o-)',
+                    'Meta (m-)',
+                    'Para (p-)',
+                    'Neo-'
+                ],
+                answer: 2,
+                explain: 'Posisi 1,2 disebut orto (o-), posisi 1,3 disebut meta (m-), dan posisi berseberangan 1,4 disebut para (p-).'
+            },
+            {
+                category: 'Reaksi Benzena',
+                prompt: 'Benzena lebih mudah mengalami reaksi substitusi elektrofilik dibandingkan reaksi adisi karena reaksi substitusi...',
+                options: [
+                    'Tidak memerlukan katalis pada kondisi apa pun',
+                    'Mempertahankan kestabilan sistem aromatik cincin benzena',
+                    'Selalu berlangsung secara endoterm dengan menyerap kalor',
+                    'Memutus seluruh ikatan sigma C–C menjadi rantai terbuka'
+                ],
+                answer: 1,
+                explain: 'Reaksi adisi akan menghilangkan delokalisasi 6 elektron π yang sangat stabil, sedangkan substitusi mengembalikan lingkaran aromatik setelah melepas H⁺.'
+            },
+            {
+                category: 'Mekanisme Reaksi',
+                prompt: 'Pada reaksi nitrasi benzena menggunakan campuran HNO₃ pekat dan H₂SO₄ pekat, spesi elektrofil yang menyerang cincin benzena adalah...',
+                options: [
+                    'NO₃⁻',
+                    'NO₂⁺ (ion nitronium)',
+                    'HSO₄⁻',
+                    'NO₂⁻'
+                ],
+                answer: 1,
+                explain: 'H₂SO₄ pekat memprotonasi HNO₃ sehingga melepas molekul air dan menghasilkan elektrofil kuat berupa ion nitronium (NO₂⁺).'
+            },
+            {
+                category: 'Pengarah Substituen',
+                prompt: 'Jika nitrobenzena (C₆H₅NO₂) direaksikan dengan Cl₂ berkatalis FeCl₃, produk utama yang dihasilkan adalah...',
+                options: [
+                    'o-kloronitrobenzena',
+                    'p-kloronitrobenzena',
+                    'm-kloronitrobenzena',
+                    '2,4,6-trikloronitrobenzena'
+                ],
+                answer: 2,
+                explain: 'Gugus -NO₂ merupakan gugus penarik elektron kuat yang bertindak sebagai pengarah meta (posisi 1,3).'
+            },
+            {
+                category: 'Kegunaan Senyawa',
+                prompt: 'Senyawa turunan benzena yang bersifat asam lemah, digunakan sebagai antiseptik (karbol), dan menjadi bahan baku plastik bakelit adalah...',
+                options: [
+                    'Anilina (C₆H₅NH₂)',
+                    'Fenol (C₆H₅OH)',
+                    'Toluena (C₆H₅CH₃)',
+                    'Stirena (C₆H₅CH=CH₂)'
+                ],
+                answer: 1,
+                explain: 'Fenol (C₆H₅OH) bersifat asam lemah, berfungsi sebagai disinfektan/karbol, dan bereaksi dengan formaldehida membentuk polimer bakelit.'
+            },
+            {
+                category: 'Kegunaan Senyawa',
+                prompt: 'Monomer turunan benzena yang digunakan untuk memproduksi plastik polistirena (styrofoam) adalah...',
+                options: [
+                    'Benzaldehida (C₆H₅CHO)',
+                    'Asam benzoat (C₆H₅COOH)',
+                    'Stirena (C₆H₅CH=CH₂)',
+                    'Klorobenzena (C₆H₅Cl)'
+                ],
+                answer: 2,
+                explain: 'Stirena (vinilbenzena) mengalami polimerisasi adisi pada ikatan rangkap gugus vinilnya menghasilkan polistirena.'
+            }
+        ];
+
+        /**
+         * ==========================================================================
+         * STATE SESI DI MEMORI (TANPA LOCALSTORAGE/SESSIONSTORAGE)
+         * ==========================================================================
+         */
+        const state = {
+            theme: 'dark',
+            activeModule: 'mod-struktur',
+            exploredModules: new Set(['mod-struktur']),
+            bondMode: 'delocalized', // 'delocalized' | 'kekule1' | 'kekule2' | 'resonance'
+            molRotZ: 0,
+            molVelZ: 0.0025,
+            molZoom: 1,
+            parallaxX: 0,
+            parallaxY: 0,
+            selectedPart: 'pi',
+            hoveredPart: null,
+            // Tata nama builder
+            ringSlots: { 1: '-OH', 2: '-Cl', 3: null, 4: null, 5: null, 6: null },
+            activeChipId: '-Cl',
+            // Reaksi
+            rxIndex: 0,
+            rxProgress: 0,
+            rxPlaying: false,
+            // Kuis
+            quizList: [],
+            quizIdx: 0,
+            quizScore: 0,
+            quizLocked: false,
+            timerEnabled: false,
+            timerSeconds: 30,
+            timerId: null
+        };
+
+        /* ==========================================================================
+           1. INTRO SINEMATIK (< 2 DETIK)
+           ========================================================================== */
+        (function initCinematicIntro() {
+            const intro = document.getElementById('cinematicIntro');
+            const group = document.getElementById('introAtomsGroup');
+            const skipBtn = document.getElementById('btnSkipIntro');
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (reduced) {
+                intro.classList.add('hidden');
+                return;
+            }
+
+            // Buat 6 atom C tersebar lalu menyatu ke titik heksagon
+            const startOffsets = [
+                [-65, -55], [70, -45], [80, 50], [0, 75], [-75, 45], [-55, -20]
+            ];
+            for (let i = 0; i < 6; i++) {
+                const angle = (-90 + i * 60) * Math.PI / 180;
+                const tx = 90 + 48 * Math.cos(angle);
+                const ty = 90 + 48 * Math.sin(angle);
+                const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                c.setAttribute('cx', tx);
+                c.setAttribute('cy', ty);
+                c.setAttribute('r', '9');
+                c.setAttribute('fill', '#64748b');
+                c.setAttribute('stroke', 'var(--accent-mint)');
+                c.setAttribute('stroke-width', '2');
+                c.classList.add('intro-atom');
+                c.style.transform = `translate(${startOffsets[i][0]}px, ${startOffsets[i][1]}px)`;
+                group.appendChild(c);
+            }
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    group.querySelectorAll('.intro-atom').forEach(el => {
+                        el.style.transform = 'translate(0px, 0px)';
+                    });
+                    intro.classList.add('assembled');
+                });
+            });
+
+            const closeIntro = () => intro.classList.add('hidden');
+            const autoTimer = setTimeout(closeIntro, 1750);
+            skipBtn.addEventListener('click', () => {
+                clearTimeout(autoTimer);
+                closeIntro();
+            });
+        })();
+
+        /* ==========================================================================
+           2. TEMA TERANG / GELAP & NAVIGASI MODUL + PROGRESS RING
+           ========================================================================== */
+        const btnThemeSwitch = document.getElementById('btnThemeSwitch');
+        btnThemeSwitch.addEventListener('click', () => {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', state.theme);
+            document.getElementById('iconSun').style.display = state.theme === 'dark' ? 'none' : 'block';
+            document.getElementById('iconMoon').style.display = state.theme === 'dark' ? 'block' : 'none';
+            document.getElementById('themeText').textContent = state.theme === 'dark' ? 'Terang' : 'Gelap';
+        });
+
+        function updateSessionProgress() {
+            const count = state.exploredModules.size;
+            const pct = Math.round((count / 4) * 100);
+            const circumference = 119.38;
+            const offset = circumference - (pct / 100) * circumference;
+
+            document.getElementById('progressRingCircle').style.strokeDashoffset = offset;
+            document.getElementById('progressRingLabel').textContent = `${pct}%`;
+            document.getElementById('progressSubLabel').textContent = `${count} dari 4 modul dieksplorasi`;
+        }
+
+        function switchModule(modId) {
+            state.activeModule = modId;
+            state.exploredModules.add(modId);
+            updateSessionProgress();
+
+            document.querySelectorAll('.nav-btn, .mobile-tab-btn').forEach(btn => {
+                const isMatch = btn.dataset.module === modId;
+                btn.classList.toggle('active', isMatch);
+                if (btn.hasAttribute('aria-selected')) {
+                    btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+                }
+            });
+
+            document.querySelectorAll('.module-panel').forEach(panel => {
+                panel.classList.toggle('active', panel.id === modId);
+            });
+
+            if (modId === 'mod-struktur') resizeBenzeneCanvas();
+        }
+
+        document.querySelectorAll('[data-module]').forEach(btn => {
+            btn.addEventListener('click', () => switchModule(btn.dataset.module));
+        });
+
+        /* ==========================================================================
+           3. GLOSARIUM INTERAKTIF (POPOVER & INDEKS)
+           ========================================================================== */
+        const glossaryPopover = document.getElementById('glossaryPopover');
+
+        function openGlossaryAt(termKey, triggerEl) {
+            const item = GLOSSARY_DATA[termKey];
+            if (!item) return;
+            document.getElementById('popTermTitle').textContent = item.title;
+            document.getElementById('popTermDesc').textContent = item.desc;
+
+            if (triggerEl) {
+                const rect = triggerEl.getBoundingClientRect();
+                const top = Math.min(window.innerHeight - 175, rect.bottom + 8);
+                const left = Math.max(16, Math.min(window.innerWidth - 336, rect.left));
+                glossaryPopover.style.top = `${top}px`;
+                glossaryPopover.style.left = `${left}px`;
+            } else {
+                glossaryPopover.style.top = '76px';
+                glossaryPopover.style.left = '50%';
+                glossaryPopover.style.transform = 'translateX(-50%)';
+            }
+            glossaryPopover.classList.add('visible');
+        }
+
+        document.querySelectorAll('.glossary-term').forEach(el => {
+            el.addEventListener('click', e => {
+                e.stopPropagation();
+                openGlossaryAt(el.dataset.term, el);
+            });
+        });
+
+        document.getElementById('btnClosePopover').addEventListener('click', () => {
+            glossaryPopover.classList.remove('visible');
+        });
+
+        document.addEventListener('click', e => {
+            if (!glossaryPopover.contains(e.target) && !e.target.classList.contains('glossary-term')) {
+                glossaryPopover.classList.remove('visible');
+            }
+        });
+
+        // Tombol Glosarium Lengkap di Topbar membuka Bottom Sheet Indeks Istilah
+        document.getElementById('btnGlossaryIndex').addEventListener('click', () => {
+            document.getElementById('sheetSubtitle').textContent = 'KAMUS ISTILAH KIMIA ORGANIK';
+            document.getElementById('sheetTitle').textContent = 'Glosarium Bab Benzena';
+            const html = Object.values(GLOSSARY_DATA).map(g => `
+                <div style="padding:0.85rem; margin-bottom:0.65rem; border-radius:12px; background:var(--bg-subtle); border:1px solid var(--border-subtle);">
+                    <div style="font-weight:700; color:var(--accent-mint); margin-bottom:0.2rem;">${g.title}</div>
+                    <div style="font-size:0.85rem; color:var(--text-secondary);">${g.desc}</div>
+                </div>
+            `).join('');
+            document.getElementById('sheetContent').innerHTML = html;
+            openDetailSheet();
+        });
+
+        /* ==========================================================================
+           4. MODUL 1: CANVAS 2D INTERAKTIF BENZENA (INERSIA, ZOOM, MORPHING)
+           ========================================================================== */
+        const bCanvas = document.getElementById('benzeneCanvas');
+        const bCtx = bCanvas.getContext('2d');
+        const canvasStage = document.getElementById('canvasStage');
+        let bWidth = 500, bHeight = 410;
+        let hitTargets = [];
+        let doubleBondAlpha = [1, 1, 1]; // Morphing halus antara Kekulé I, II, dan Delokalisasi
+        let piRingAlpha = 1;
+
+        function resizeBenzeneCanvas() {
+            const rect = canvasStage.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+            bWidth = rect.width || 500;
+            bHeight = rect.height || 410;
+            bCanvas.width = bWidth * dpr;
+            bCanvas.height = bHeight * dpr;
+            bCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        const PART_INFO = {
+            pi: {
+                badge: 'AWAN ELEKTRON π',
+                title: '6 Elektron π Terdelokalisasi',
+                body: 'Keenam orbital 2p saling tumpang tindih menyamping di atas & bawah cincin, membentuk awan elektron berenergi rendah (stabilisasi resonansi 152 kJ/mol).'
+            },
+            carbon: {
+                badge: 'ATOM KARBON (C)',
+                title: 'Hibridisasi sp² — Sudut 120°',
+                body: 'Setiap atom C mengikat 2 atom C tetangga dan 1 atom H secara trigonal planar datar dengan sudut ikatan 120° tanpa tegangan cincin.'
+            },
+            hydrogen: {
+                badge: 'ATOM HIDROGEN (H)',
+                title: 'Ikatan Sigma C–H (1,09 Å)',
+                body: 'Terikat kovalen pada orbital sp² karbon. Pada reaksi substitusi elektrofilik, atom H ini digantikan sebagai ion H⁺ tanpa merusak cincin.'
+            },
+            bond: {
+                badge: 'IKATAN KARBON–KARBON',
+                title: 'Panjang Ikatan Identik 1,40 Å',
+                body: 'Orde ikatan 1,5 (rata-rata tunggal 1,54 Å dan rangkap 1,34 Å), membuktikan benzena adalah hibrida resonansi Kekulé.'
+            }
+        };
+
+        function showAtomTooltip(partKey) {
+            const info = PART_INFO[partKey];
+            if (!info) return;
+            state.selectedPart = partKey;
+            document.getElementById('tipBadge').textContent = info.badge;
+            document.getElementById('tipTitle').textContent = info.title;
+            document.getElementById('tipBody').textContent = info.body;
+            document.getElementById('atomTooltip').classList.add('show');
+        }
+
+        document.getElementById('btnCloseTip').addEventListener('click', () => {
+            document.getElementById('atomTooltip').classList.remove('show');
+        });
+
+        document.querySelectorAll('[data-bondmode]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.bondMode = btn.dataset.bondmode;
+                document.querySelectorAll('[data-bondmode]').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        document.getElementById('btnResetMol').addEventListener('click', () => {
+            state.molRotZ = 0;
+            state.molVelZ = 0.0025;
+            state.molZoom = 1;
+            state.parallaxX = 0;
+            state.parallaxY = 0;
+        });
+
+        // Interaksi Drag dengan Inersia & Pinch-Zoom pada Canvas
+        let isDraggingMol = false;
+        let lastDragAngle = 0;
+        let dragMoved = false;
+        let pinchStartDist = null;
+        let pinchStartZoom = 1;
+
+        function getPointerAngle(clientX, clientY) {
+            const rect = bCanvas.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            return Math.atan2(clientY - cy, clientX - cx);
+        }
+
+        bCanvas.addEventListener('pointerdown', e => {
+            isDraggingMol = true;
+            dragMoved = false;
+            lastDragAngle = getPointerAngle(e.clientX, e.clientY);
+            state.molVelZ = 0;
+        });
+
+        window.addEventListener('pointermove', e => {
+            const rect = bCanvas.getBoundingClientRect();
+            if (rect.width > 0) {
+                const nx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+                const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+                state.parallaxX += (nx * 10 - state.parallaxX) * 0.12;
+                state.parallaxY += (ny * 10 - state.parallaxY) * 0.12;
+            }
+
+            if (isDraggingMol) {
+                const currentAngle = getPointerAngle(e.clientX, e.clientY);
+                let delta = currentAngle - lastDragAngle;
+                if (delta > Math.PI) delta -= Math.PI * 2;
+                if (delta < -Math.PI) delta += Math.PI * 2;
+                if (Math.abs(delta) > 0.004) dragMoved = true;
+                state.molRotZ += delta;
+                state.molVelZ = delta * 0.85;
+                lastDragAngle = currentAngle;
+            } else if (e.target === bCanvas) {
+                // Deteksi Hover
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+                let found = null;
+                for (const t of hitTargets) {
+                    if (Math.hypot(mx - t.x, my - t.y) <= t.r) {
+                        found = t.part;
+                        break;
+                    }
+                }
+                state.hoveredPart = found;
+                bCanvas.style.cursor = found ? 'pointer' : 'grab';
+            }
+        });
+
+        window.addEventListener('pointerup', e => {
+            if (!isDraggingMol) return;
+            isDraggingMol = false;
+            if (!dragMoved && e.target === bCanvas) {
+                const rect = bCanvas.getBoundingClientRect();
+                const mx = e.clientX - rect.left;
+                const my = e.clientY - rect.top;
+                for (const t of hitTargets) {
+                    if (Math.hypot(mx - t.x, my - t.y) <= t.r + 6) {
+                        showAtomTooltip(t.part);
+                        break;
+                    }
+                }
+            }
+        });
+
+        bCanvas.addEventListener('wheel', e => {
+            e.preventDefault();
+            const factor = e.deltaY < 0 ? 1.09 : 0.91;
+            state.molZoom = Math.max(0.65, Math.min(1.75, state.molZoom * factor));
+        }, { passive: false });
+
+        bCanvas.addEventListener('touchstart', e => {
+            if (e.touches.length === 2) {
+                pinchStartDist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                pinchStartZoom = state.molZoom;
+            }
+        }, { passive: true });
+
+        bCanvas.addEventListener('touchmove', e => {
+            if (e.touches.length === 2 && pinchStartDist) {
+                const dist = Math.hypot(
+                    e.touches[0].clientX - e.touches[1].clientX,
+                    e.touches[0].clientY - e.touches[1].clientY
+                );
+                state.molZoom = Math.max(0.65, Math.min(1.75, pinchStartZoom * (dist / pinchStartDist)));
+            }
+        }, { passive: true });
+
+        bCanvas.addEventListener('touchend', () => { pinchStartDist = null; });
+
+        // Loop Render 60 FPS Canvas Molekul Benzena
+        function renderBenzeneLoop(now) {
+            const t = now * 0.001;
+            if (state.activeModule === 'mod-struktur') {
+                // Inersia rotasi lembut
+                if (!isDraggingMol) {
+                    state.molRotZ += state.molVelZ;
+                    state.molVelZ *= 0.965;
+                    if (Math.abs(state.molVelZ) < 0.0015) {
+                        state.molVelZ = 0.0015 * (state.molVelZ >= 0 ? 1 : -1);
+                    }
+                }
+
+                // Target morphing untuk mode ikatan
+                const osc = (Math.sin(t * 2.8) + 1) * 0.5;
+                let targetPi = 0;
+                let targetSetA = 0;
+                let targetSetB = 0;
+
+                if (state.bondMode === 'delocalized') {
+                    targetPi = 1;
+                } else if (state.bondMode === 'kekule1') {
+                    targetSetA = 1;
+                } else if (state.bondMode === 'kekule2') {
+                    targetSetB = 1;
+                } else if (state.bondMode === 'resonance') {
+                    targetSetA = osc;
+                    targetSetB = 1 - osc;
+                    targetPi = 0.28;
+                }
+
+                piRingAlpha += (targetPi - piRingAlpha) * 0.12;
+                doubleBondAlpha[0] += (targetSetA - doubleBondAlpha[0]) * 0.12;
+                doubleBondAlpha[1] += (targetSetB - doubleBondAlpha[1]) * 0.12;
+
+                drawBenzeneFrame(t);
+            }
+            requestAnimationFrame(renderBenzeneLoop);
+        }
+
+        function drawBenzeneFrame(t) {
+            bCtx.clearRect(0, 0, bWidth, bHeight);
+            hitTargets = [];
+
+            const cx = bWidth / 2 + state.parallaxX;
+            const cy = bHeight / 2 + state.parallaxY;
+            const baseScale = Math.min(bWidth, bHeight) / 390 * state.molZoom;
+
+            const rC = 86 * baseScale;
+            const rH = 144 * baseScale;
+            const isDark = state.theme === 'dark';
+            const mintColor = isDark ? '#00e5a8' : '#008c68';
+
+            const carbons = [];
+            const hydrogens = [];
+
+            for (let i = 0; i < 6; i++) {
+                const ang = state.molRotZ + (-90 + i * 60) * Math.PI / 180;
+                carbons.push({ x: cx + rC * Math.cos(ang), y: cy + rC * Math.sin(ang) });
+                hydrogens.push({ x: cx + rH * Math.cos(ang), y: cy + rH * Math.sin(ang) });
+            }
+
+            // 1. Awan elektron π berdenyut lembut & 6 elektron mengorbit
+            if (piRingAlpha > 0.02) {
+                const pulseR = (49 + Math.sin(t * 2.4) * 2.5) * baseScale;
+                bCtx.save();
+                bCtx.globalAlpha = piRingAlpha;
+
+                const halo = bCtx.createRadialGradient(cx, cy, pulseR * 0.4, cx, cy, pulseR * 1.45);
+                halo.addColorStop(0, isDark ? 'rgba(0, 229, 168, 0.22)' : 'rgba(0, 140, 104, 0.16)');
+                halo.addColorStop(1, 'transparent');
+                bCtx.fillStyle = halo;
+                bCtx.beginPath();
+                bCtx.arc(cx, cy, pulseR * 1.45, 0, Math.PI * 2);
+                bCtx.fill();
+
+                bCtx.beginPath();
+                bCtx.arc(cx, cy, pulseR, 0, Math.PI * 2);
+                bCtx.strokeStyle = mintColor;
+                bCtx.lineWidth = 3 * baseScale;
+                bCtx.setLineDash([8 * baseScale, 5 * baseScale]);
+                bCtx.lineDashOffset = -t * 18;
+                bCtx.stroke();
+                bCtx.setLineDash([]);
+
+                // 6 Elektron π mengitari cincin
+                for (let e = 0; e < 6; e++) {
+                    const eAng = t * 1.3 + (e * Math.PI) / 3;
+                    const ex = cx + pulseR * Math.cos(eAng);
+                    const ey = cy + pulseR * Math.sin(eAng);
+                    bCtx.beginPath();
+                    bCtx.arc(ex, ey, 3.2 * baseScale, 0, Math.PI * 2);
+                    bCtx.fillStyle = mintColor;
+                    bCtx.fill();
+                }
+                bCtx.restore();
+                hitTargets.push({ part: 'pi', x: cx, y: cy, r: pulseR });
+            }
+
+            // 2. Ikatan Sigma C–H
+            for (let i = 0; i < 6; i++) {
+                bCtx.beginPath();
+                bCtx.moveTo(carbons[i].x, carbons[i].y);
+                bCtx.lineTo(hydrogens[i].x, hydrogens[i].y);
+                bCtx.strokeStyle = isDark ? 'rgba(180, 210, 220, 0.42)' : 'rgba(40, 65, 75, 0.42)';
+                bCtx.lineWidth = 3 * baseScale;
+                bCtx.stroke();
+            }
+
+            // 3. Ikatan C–C (Kerangka Utama + Morphing Ikatan Rangkap Kekulé)
+            for (let i = 0; i < 6; i++) {
+                const p1 = carbons[i];
+                const p2 = carbons[(i + 1) % 6];
+                const midX = (p1.x + p2.x) / 2;
+                const midY = (p1.y + p2.y) / 2;
+
+                bCtx.beginPath();
+                bCtx.moveTo(p1.x, p1.y);
+                bCtx.lineTo(p2.x, p2.y);
+                bCtx.strokeStyle = isDark ? '#7896a3' : '#3a5460';
+                bCtx.lineWidth = 4.6 * baseScale;
+                bCtx.lineCap = 'round';
+                bCtx.stroke();
+
+                const dAlpha = i % 2 === 0 ? doubleBondAlpha[0] : doubleBondAlpha[1];
+                if (dAlpha > 0.02) {
+                    const inwardX = (cx - midX) * 0.18;
+                    const inwardY = (cy - midY) * 0.18;
+                    bCtx.save();
+                    bCtx.globalAlpha = dAlpha;
+                    bCtx.beginPath();
+                    bCtx.moveTo(p1.x + inwardX + (p2.x - p1.x) * 0.14, p1.y + inwardY + (p2.y - p1.y) * 0.14);
+                    bCtx.lineTo(p2.x + inwardX - (p2.x - p1.x) * 0.14, p2.y + inwardY - (p2.y - p1.y) * 0.14);
+                    bCtx.strokeStyle = mintColor;
+                    bCtx.lineWidth = 3.2 * baseScale;
+                    bCtx.lineCap = 'round';
+                    bCtx.stroke();
+                    bCtx.restore();
+                }
+
+                hitTargets.push({ part: 'bond', x: midX, y: midY, r: 16 * baseScale });
+            }
+
+            // 4. Atom Karbon (CPK Abu-abu Bergradasi)
+            carbons.forEach(c => {
+                const rad = 16.5 * baseScale;
+                const grad = bCtx.createRadialGradient(c.x - rad * 0.3, c.y - rad * 0.3, rad * 0.1, c.x, c.y, rad);
+                grad.addColorStop(0, '#94a3b8');
+                grad.addColorStop(0.55, '#475569');
+                grad.addColorStop(1, '#1e293b');
+
+                bCtx.beginPath();
+                bCtx.arc(c.x, c.y, rad, 0, Math.PI * 2);
+                bCtx.fillStyle = grad;
+                bCtx.fill();
+                bCtx.strokeStyle = state.hoveredPart === 'carbon' ? mintColor : 'rgba(255,255,255,0.22)';
+                bCtx.lineWidth = 1.6;
+                bCtx.stroke();
+
+                bCtx.fillStyle = '#ffffff';
+                bCtx.font = `700 ${Math.round(12 * baseScale)}px "JetBrains Mono", monospace`;
+                bCtx.textAlign = 'center';
+                bCtx.textBaseline = 'middle';
+                bCtx.fillText('C', c.x, c.y + 0.5);
+
+                hitTargets.unshift({ part: 'carbon', x: c.x, y: c.y, r: rad + 4 });
+            });
+
+            // 5. Atom Hidrogen (CPK Putih Bercahaya)
+            hydrogens.forEach(h => {
+                const rad = 12.5 * baseScale;
+                const grad = bCtx.createRadialGradient(h.x - rad * 0.3, h.y - rad * 0.3, rad * 0.1, h.x, h.y, rad);
+                grad.addColorStop(0, '#ffffff');
+                grad.addColorStop(0.75, '#e2e8f0');
+                grad.addColorStop(1, '#94a3b8');
+
+                bCtx.beginPath();
+                bCtx.arc(h.x, h.y, rad, 0, Math.PI * 2);
+                bCtx.fillStyle = grad;
+                bCtx.fill();
+                bCtx.strokeStyle = state.hoveredPart === 'hydrogen' ? mintColor : 'rgba(100,116,139,0.5)';
+                bCtx.lineWidth = 1.4;
+                bCtx.stroke();
+
+                bCtx.fillStyle = '#0f172a';
+                bCtx.font = `700 ${Math.round(10.5 * baseScale)}px "JetBrains Mono", monospace`;
+                bCtx.textAlign = 'center';
+                bCtx.textBaseline = 'middle';
+                bCtx.fillText('H', h.x, h.y + 0.5);
+
+                hitTargets.unshift({ part: 'hydrogen', x: h.x, y: h.y, r: rad + 5 });
+            });
+        }
+
+        // Slider Energi Stabilisasi
+        const energySlider = document.getElementById('energySlider');
+        energySlider.addEventListener('input', e => {
+            const val = parseInt(e.target.value, 10);
+            const stageLabel = document.getElementById('stabStageLabel');
+            const note = document.getElementById('energyNote');
+            const gapGroup = document.getElementById('resonanceGapGroup');
+            const lineBenzene = document.getElementById('lineBenzene');
+
+            if (val < 35) {
+                stageLabel.textContent = '1 IKATAN RANGKAP';
+                gapGroup.style.opacity = '0.2';
+                lineBenzene.setAttribute('opacity', '0.35');
+                note.innerHTML = 'Hidrogenasi <strong>sikloheksena</strong> (1 ikatan rangkap C=C) melepaskan kalor standar sebesar <strong>120 kJ/mol</strong>.';
+            } else if (val < 72) {
+                stageLabel.textContent = 'PREDIKSI 3 RANGKAP';
+                gapGroup.style.opacity = '0.45';
+                lineBenzene.setAttribute('opacity', '0.45');
+                note.innerHTML = 'Jika benzena memiliki 3 ikatan rangkap terisolasi (<strong>1,3,5-sikloheksatriena</strong>), kalor hidrogenasinya seharusnya 3 × 120 = <strong>360 kJ/mol</strong>.';
+            } else {
+                stageLabel.textContent = 'BENZENA NYATA';
+                gapGroup.style.opacity = '1';
+                lineBenzene.setAttribute('opacity', '1');
+                note.innerHTML = 'Benzena melepaskan kalor <strong>152 kJ/mol lebih sedikit</strong> (-208 kJ/mol) dari prediksi teoretis. Selisih inilah energi stabilisasi aromatik.';
+            }
+        });
+
+        /* ==========================================================================
+           5. MODUL 2: GALERI 3D TILT & PEMBANGUN TATA NAMA DRAG-AND-DROP
+           ========================================================================== */
+        const sheetBackdrop = document.getElementById('sheetBackdrop');
+        const detailSheet = document.getElementById('detailSheet');
+
+        function openDetailSheet() {
+            sheetBackdrop.classList.add('open');
+            detailSheet.classList.add('open');
+        }
+
+        function closeDetailSheet() {
+            sheetBackdrop.classList.remove('open');
+            detailSheet.classList.remove('open');
+        }
+
+        sheetBackdrop.addEventListener('click', closeDetailSheet);
+        document.getElementById('btnCloseSheet').addEventListener('click', closeDetailSheet);
+
+        function buildMiniMolSvg(mol) {
+            return `
+                <svg width="112" height="112" viewBox="0 0 120 120" aria-hidden="true">
+                    <polygon points="60,36 88,52 88,84 60,100 32,84 32,52" fill="none" stroke="var(--text-secondary)" stroke-width="2.4"></polygon>
+                    <circle cx="60" cy="68" r="16" fill="none" stroke="var(--accent-mint)" stroke-width="2" stroke-dasharray="4 3"></circle>
+                    <line x1="60" y1="36" x2="60" y2="21" stroke="var(--text-secondary)" stroke-width="2.4"></line>
+                    <rect x="33" y="4" width="54" height="20" rx="10" fill="${mol.atomColor}"></rect>
+                    <text x="60" y="17.5" text-anchor="middle" fill="#ffffff" font-family="JetBrains Mono" font-size="10" font-weight="700">${mol.chip}</text>
+                </svg>
+            `;
+        }
+
+        function renderDerivativesGallery() {
+            const gallery = document.getElementById('derivativesGallery');
+            gallery.innerHTML = '';
+
+            DERIVATIVES_DATA.forEach(mol => {
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'mol-card';
+                card.setAttribute('aria-label', `Pelajari ${mol.name} (${mol.formula})`);
+                card.innerHTML = `
+                    ${buildMiniMolSvg(mol)}
+                    <div style="font-weight:700; font-size:1rem; color:var(--text-primary);">${mol.name}</div>
+                    <div style="font-size:0.76rem; color:var(--text-muted);">${mol.iupac}</div>
+                    <span class="mol-badge">${mol.formula}</span>
+                `;
+
+                // Efek kartu miring 3D lembut mengikuti kursor/sentuhan
+                card.addEventListener('pointermove', e => {
+                    if (e.pointerType !== 'mouse') return;
+                    const r = card.getBoundingClientRect();
+                    const rx = ((e.clientY - r.top) / r.height - 0.5) * -12;
+                    const ry = ((e.clientX - r.left) / r.width - 0.5) * 12;
+                    card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateY(-3px)`;
+                });
+
+                card.addEventListener('pointerleave', () => {
+                    card.style.transform = 'rotateX(0deg) rotateY(0deg) translateY(0)';
+                });
+
+                card.addEventListener('click', () => {
+                    document.getElementById('sheetSubtitle').textContent = `GUGUS FUNGSI: ${mol.group}`;
+                    document.getElementById('sheetTitle').textContent = `${mol.name} (${mol.formula})`;
+                    document.getElementById('sheetContent').innerHTML = `
+                        <div style="display:flex; justify-content:center; margin-bottom:0.75rem;">${buildMiniMolSvg(mol)}</div>
+                        <div style="display:grid; gap:0.75rem; font-size:0.88rem;">
+                            <div style="padding:0.8rem; border-radius:12px; background:var(--bg-subtle);">
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Nama IUPAC & Rumus</div>
+                                <div style="font-weight:700; margin-top:2px;">${mol.iupac} • <span class="mono" style="color:var(--accent-mint);">${mol.formula}</span></div>
+                            </div>
+                            <div style="padding:0.8rem; border-radius:12px; background:var(--bg-subtle);">
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Sifat Fisik & Kimia</div>
+                                <div style="color:var(--text-secondary); margin-top:2px;">${mol.props}</div>
+                            </div>
+                            <div style="padding:0.8rem; border-radius:12px; background:var(--bg-subtle);">
+                                <div style="font-size:0.72rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Kegunaan Sehari-hari</div>
+                                <div style="color:var(--text-secondary); margin-top:2px;">${mol.uses}</div>
+                            </div>
+                            <div style="padding:0.85rem; border-radius:12px; background:var(--accent-mint-dim); border:1px solid var(--border-active);">
+                                <div style="font-size:0.74rem; font-weight:700; color:var(--accent-mint); text-transform:uppercase;">Catatan Kimia Menarik</div>
+                                <div style="color:var(--text-primary); margin-top:2px;">${mol.fact}</div>
+                            </div>
+                        </div>
+                    `;
+                    openDetailSheet();
+                });
+
+                gallery.appendChild(card);
+            });
+        }
+
+        // Pembangun Tata Nama Interaktif (Drag & Drop + Klik Aksesibel C1–C6)
+        function initNomenclatureBuilder() {
+            const pool = document.getElementById('subChipPool');
+            pool.innerHTML = '';
+
+            NOM_SUBSTITUENTS.forEach(sub => {
+                const chip = document.createElement('button');
+                chip.type = 'button';
+                chip.draggable = true;
+                chip.className = `sub-chip ${state.activeChipId === sub.id ? 'selected-chip' : ''}`;
+                chip.innerHTML = `<span style="width:9px;height:9px;border-radius:50%;background:${sub.color};"></span><span>${sub.label}</span>`;
+
+                chip.addEventListener('dragstart', e => {
+                    state.activeChipId = sub.id;
+                    e.dataTransfer.setData('text/plain', sub.id);
+                });
+
+                chip.addEventListener('click', () => {
+                    state.activeChipId = sub.id;
+                    document.querySelectorAll('.sub-chip').forEach(c => c.classList.remove('selected-chip'));
+                    chip.classList.add('selected-chip');
+                });
+
+                pool.appendChild(chip);
+            });
+
+            renderRingDropSlots();
+            evaluateNomenclature();
+        }
+
+        function assignSubstituentToPos(posNum, subId) {
+            // Jika posisi sudah terisi oleh substituen yang sama, hapus; jika belum, pasang (maksimal 2 substituen aktif)
+            if (state.ringSlots[posNum] === subId) {
+                state.ringSlots[posNum] = null;
+            } else {
+                const occupied = Object.keys(state.ringSlots).filter(k => state.ringSlots[k] !== null);
+                if (occupied.length >= 2 && !state.ringSlots[posNum]) {
+                    // Ganti posisi kedua terlama selain posisi 1 jika ada
+                    const toClear = occupied.find(k => Number(k) !== 1) || occupied[0];
+                    state.ringSlots[toClear] = null;
+                }
+                state.ringSlots[posNum] = subId;
+            }
+            renderRingDropSlots();
+            evaluateNomenclature();
+        }
+
+        function renderRingDropSlots() {
+            const group = document.getElementById('dropSlotsGroup');
+            group.innerHTML = '';
+
+            const coords = [
+                { pos: 1, vx: 170, vy: 95,  sx: 170, sy: 44 },
+                { pos: 2, vx: 235, vy: 132.5, sx: 280, sy: 106 },
+                { pos: 3, vx: 235, vy: 207.5, sx: 280, sy: 234 },
+                { pos: 4, vx: 170, vy: 245, sx: 170, sy: 296 },
+                { pos: 5, vx: 105, vy: 207.5, sx: 60,  sy: 234 },
+                { pos: 6, vx: 105, vy: 132.5, sx: 60,  sy: 106 }
+            ];
+
+            coords.forEach(pt => {
+                const assignedId = state.ringSlots[pt.pos];
+                const meta = NOM_SUBSTITUENTS.find(s => s.id === assignedId);
+
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.classList.add('drop-node');
+                g.setAttribute('tabindex', '0');
+                g.setAttribute('role', 'button');
+                g.setAttribute('aria-label', `Posisi C${pt.pos}: ${meta ? meta.label : 'Kosong (H)'}`);
+
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', pt.vx);
+                line.setAttribute('y1', pt.vy);
+                line.setAttribute('x2', pt.sx);
+                line.setAttribute('y2', pt.sy);
+                line.setAttribute('stroke', meta ? 'var(--accent-mint)' : 'var(--border-subtle)');
+                line.setAttribute('stroke-width', meta ? '2.8' : '2');
+                if (!meta) line.setAttribute('stroke-dasharray', '4 3');
+
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', pt.sx);
+                circle.setAttribute('cy', pt.sy);
+                circle.setAttribute('r', '23');
+                circle.setAttribute('fill', meta ? meta.color : 'var(--bg-elevated)');
+                circle.setAttribute('stroke', meta ? '#ffffff' : 'var(--border-subtle)');
+                circle.setAttribute('stroke-width', '1.8');
+
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', pt.sx);
+                text.setAttribute('y', pt.sy + 4);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-family', 'JetBrains Mono');
+                text.setAttribute('font-size', '10.5');
+                text.setAttribute('font-weight', '700');
+                text.setAttribute('fill', meta ? '#ffffff' : 'var(--text-muted)');
+                text.textContent = meta ? meta.label : `C${pt.pos}`;
+
+                g.appendChild(line);
+                g.appendChild(circle);
+                g.appendChild(text);
+
+                // Dragover & Drop
+                g.addEventListener('dragover', e => e.preventDefault());
+                g.addEventListener('drop', e => {
+                    e.preventDefault();
+                    const subId = e.dataTransfer.getData('text/plain') || state.activeChipId;
+                    if (subId) assignSubstituentToPos(pt.pos, subId);
+                });
+
+                // Klik / Enter aksesibel
+                g.addEventListener('click', () => {
+                    if (state.activeChipId) assignSubstituentToPos(pt.pos, state.activeChipId);
+                });
+                g.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        if (state.activeChipId) assignSubstituentToPos(pt.pos, state.activeChipId);
+                    }
+                });
+
+                group.appendChild(g);
+            });
+        }
+
+        function evaluateNomenclature() {
+            const activeEntries = Object.entries(state.ringSlots)
+                .filter(([, val]) => val !== null)
+                .map(([pos, id]) => ({
+                    pos: Number(pos),
+                    meta: NOM_SUBSTITUENTS.find(s => s.id === id)
+                }));
+
+            const relBadge = document.getElementById('nomRelationBadge');
+            const formBadge = document.getElementById('nomFormulaBadge');
+            const mainName = document.getElementById('nomMainName');
+            const altName = document.getElementById('nomAltName');
+            const explain = document.getElementById('nomExplanation');
+
+            mainName.classList.remove('name-reveal');
+            void mainName.offsetWidth;
+            mainName.classList.add('name-reveal');
+
+            if (activeEntries.length === 0) {
+                relBadge.textContent = 'CINCIN INDUK';
+                formBadge.textContent = 'C₆H₆';
+                mainName.textContent = 'Benzena';
+                altName.textContent = 'Belum ada substituen terpasang';
+                explain.textContent = 'Ketuk atau seret substituen ke posisi C1–C6 untuk membentuk turunan monosubstitusi atau disubstitusi.';
+                return;
+            }
+
+            if (activeEntries.length === 1) {
+                const single = activeEntries[0].meta;
+                relBadge.textContent = `MONOSUBSTITUSI (C${activeEntries[0].pos})`;
+                formBadge.textContent = `C₆H₅${single.label.replace('-', '')}`;
+                mainName.textContent = single.parent.charAt(0).toUpperCase() + single.parent.slice(1);
+                altName.textContent = `Gugus tunggal otomatis mendapat nomor C1`;
+                explain.textContent = `Pada benzena monosubstitusi, posisi substituen ${single.label} selalu dianggap nomor 1 sehingga tidak memerlukan awalan angka maupun orto/meta/para.`;
+                return;
+            }
+
+            // Dua substituen: tentukan mana gugus prioritas (C1)
+            let [first, second] = activeEntries;
+            if (second.meta.priority < first.meta.priority) {
+                [first, second] = [second, first];
+            }
+
+            const diff = Math.abs(first.pos - second.pos);
+            const stepDist = Math.min(diff, 6 - diff); // 1 -> orto (1,2), 2 -> meta (1,3), 3 -> para (1,4)
+            const ompMap = {
+                1: { label: 'ORTO (1,2)', short: 'o', num: 2 },
+                2: { label: 'META (1,3)', short: 'm', num: 3 },
+                3: { label: 'PARA (1,4)', short: 'p', num: 4 }
+            };
+            const omp = ompMap[stepDist];
+
+            relBadge.textContent = `POSISI ${omp.label}`;
+            formBadge.textContent = `C₆H₄(${first.meta.label.replace('-', '')})(${second.meta.label.replace('-', '')})`;
+
+            if (first.meta.id === second.meta.id) {
+                mainName.textContent = `${omp.short}-di${first.meta.prefix}benzena`;
+                altName.textContent = `Penomoran IUPAC: 1,${omp.num}-di${first.meta.prefix}benzena`;
+                explain.textContent = `Dua substituen identik (${first.meta.label}) berjarak ${stepDist} langkah karbon membentuk isomer ${omp.label.toLowerCase()}.`;
+            } else {
+                if (first.meta.isAcid) {
+                    mainName.textContent = `asam ${omp.short}-${second.meta.prefix}benzoat`;
+                    altName.textContent = `Penomoran IUPAC: asam ${omp.num}-${second.meta.prefix}benzoat`;
+                } else {
+                    mainName.textContent = `${omp.short}-${second.meta.prefix}${first.meta.parent}`;
+                    altName.textContent = `Penomoran IUPAC: ${omp.num}-${second.meta.prefix}${first.meta.parent}`;
+                }
+                explain.textContent = `Gugus ${first.meta.label} berprioritas lebih tinggi daripada ${second.meta.label} sehingga menjadi gugus induk (${first.meta.parent}) di C1, dan ${second.meta.label} berada di posisi ${omp.label.toLowerCase()}.`;
+            }
+        }
+
+        document.getElementById('btnPresetOrto').addEventListener('click', () => {
+            state.ringSlots = { 1: '-OH', 2: '-Cl', 3: null, 4: null, 5: null, 6: null };
+            renderRingDropSlots();
+            evaluateNomenclature();
+        });
+        document.getElementById('btnPresetMeta').addEventListener('click', () => {
+            state.ringSlots = { 1: '-NO2', 2: null, 3: '-Cl', 4: null, 5: null, 6: null };
+            renderRingDropSlots();
+            evaluateNomenclature();
+        });
+        document.getElementById('btnPresetPara').addEventListener('click', () => {
+            state.ringSlots = { 1: '-CH3', 2: null, 3: null, 4: '-NO2', 5: null, 6: null };
+            renderRingDropSlots();
+            evaluateNomenclature();
+        });
+        document.getElementById('btnClearRing').addEventListener('click', () => {
+            state.ringSlots = { 1: null, 2: null, 3: null, 4: null, 5: null, 6: null };
+            renderRingDropSlots();
+            evaluateNomenclature();
+        });
+
+        /* ==========================================================================
+           6. MODUL 3: TIMELINE REAKSI ELEKTROFILIK & KURVA ENERGI
+           ========================================================================== */
+        function initReactionsModule() {
+            const tabs = document.getElementById('rxTabsGroup');
+            tabs.innerHTML = '';
+            REACTIONS_DATA.forEach((rx, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = `seg-btn ${idx === state.rxIndex ? 'active' : ''}`;
+                btn.textContent = rx.label;
+                btn.addEventListener('click', () => {
+                    state.rxIndex = idx;
+                    state.rxProgress = 0;
+                    state.rxPlaying = false;
+                    document.getElementById('btnPlayRxLabel').textContent = 'Putar Tahap';
+                    document.getElementById('rxTimelineSlider').value = 0;
+                    document.querySelectorAll('#rxTabsGroup .seg-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    updateReactionVisuals();
+                });
+                tabs.appendChild(btn);
+            });
+            updateReactionVisuals();
+        }
+
+        function updateReactionVisuals() {
+            const rx = REACTIONS_DATA[state.rxIndex];
+            const p = state.rxProgress; // 0..100
+
+            document.getElementById('rxEquationStrip').innerHTML = `
+                <span class="chem">C₆H₆</span>
+                <span>+</span>
+                <span class="chem" style="color:var(--accent-amber);">${rx.reactant}</span>
+                <span style="display:inline-flex; flex-direction:column; align-items:center; font-size:0.74rem; color:var(--accent-mint); line-height:1.1;">
+                    <span class="chem">${rx.catalyst}</span>
+                    <span style="font-size:1.1rem;">⟶</span>
+                </span>
+                <span class="chem" style="color:var(--accent-mint);">${rx.product}</span>
+                <span>+</span>
+                <span class="chem">${rx.byproduct}</span>
+            `;
+
+            // Tentukan tahap 0, 1, atau 2
+            const phaseIdx = p < 34 ? 0 : (p < 72 ? 1 : 2);
+            document.getElementById('rxPhaseBadge').textContent = `TAHAP ${phaseIdx + 1} DARI 3 (${Math.round(p)}%)`;
+            document.getElementById('rxPhaseTitle').textContent = rx.phases[phaseIdx].title;
+            document.getElementById('rxPhaseDesc').textContent = rx.phases[phaseIdx].desc;
+
+            // Update kurva profil energi (self-drawing stroke-dashoffset)
+            const curve = document.getElementById('rxEnergyCurveActive');
+            const totalLen = 390;
+            curve.style.strokeDasharray = totalLen;
+            curve.style.strokeDashoffset = totalLen * (1 - p / 100);
+
+            // Posisi titik penanda pada kurva
+            const dotX = 44 + (292 * (p / 100));
+            let dotY = 128;
+            if (p < 35) dotY = 128 - (p / 35) * 94; // naik ke Ea1 (34)
+            else if (p < 55) dotY = 34 + ((p - 35) / 20) * 34; // turun ke lembah arenium (68)
+            else if (p < 70) dotY = 68 - ((p - 55) / 15) * 22; // naik ke Ea2 (46)
+            else dotY = 46 + ((p - 70) / 30) * 106; // turun ke produk eksoterm (152)
+
+            const dot = document.getElementById('rxEnergyDot');
+            dot.setAttribute('cx', dotX);
+            dot.setAttribute('cy', dotY);
+
+            // Render SVG Mekanisme Molekul
+            const svg = document.getElementById('rxMechanismSvg');
+            const approachOffset = Math.max(0, (35 - p) * 2.4);
+
+            if (phaseIdx === 0) {
+                svg.innerHTML = `
+                    <polygon points="150,55 198,83 198,139 150,167 102,139 102,83" fill="none" stroke="var(--text-secondary)" stroke-width="3"></polygon>
+                    <circle cx="150" cy="111" r="28" fill="rgba(0,229,168,0.08)" stroke="var(--accent-mint)" stroke-width="2.4" stroke-dasharray="6 4"></circle>
+                    <line x1="198" y1="83" x2="225" y2="67" stroke="var(--text-secondary)" stroke-width="2.2"></line>
+                    <text x="234" y="67" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="var(--text-primary)">H</text>
+
+                    <g transform="translate(${approachOffset}, 0)">
+                        <circle cx="295" cy="62" r="24" fill="var(--accent-amber-dim)" stroke="var(--accent-amber)" stroke-width="2"></circle>
+                        <text x="295" y="67" text-anchor="middle" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="var(--accent-amber)">${rx.electrophile}</text>
+                        <text x="295" y="102" text-anchor="middle" font-size="10.5" fill="var(--text-muted)">Elektrofil mendekat</text>
+                    </g>
+                `;
+            } else if (phaseIdx === 1) {
+                svg.innerHTML = `
+                    <polygon points="180,58 228,86 228,142 180,170 132,142 132,86" fill="none" stroke="var(--text-secondary)" stroke-width="3"></polygon>
+                    <!-- Lingkaran pi terputus sebagian (kation arenium) -->
+                    <path d="M 156 98 A 27 27 0 1 0 202 128" fill="none" stroke="var(--accent-amber)" stroke-width="2.5" stroke-dasharray="5 3"></path>
+                    <text x="180" y="118" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="700" fill="var(--accent-amber)">+</text>
+                    <!-- Karbon sp3 tetrahedral sementara -->
+                    <line x1="228" y1="86" x2="255" y2="62" stroke="var(--text-secondary)" stroke-width="2.2"></line>
+                    <text x="264" y="60" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="var(--text-primary)">H</text>
+                    <line x1="228" y1="86" x2="262" y2="96" stroke="var(--accent-mint)" stroke-width="2.5"></line>
+                    <text x="272" y="100" font-family="JetBrains Mono" font-size="12" font-weight="700" fill="var(--accent-mint)">${rx.groupLabel}</text>
+                    <text x="180" y="196" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--accent-amber)">Zat Antara Ion Arenium (Aromatisitas Terputus)</text>
+                `;
+            } else {
+                svg.innerHTML = `
+                    <polygon points="165,58 213,86 213,142 165,170 117,142 117,86" fill="none" stroke="var(--text-secondary)" stroke-width="3"></polygon>
+                    <circle cx="165" cy="114" r="28" fill="rgba(0,229,168,0.12)" stroke="var(--accent-mint)" stroke-width="2.8"></circle>
+                    <line x1="213" y1="86" x2="246" y2="67" stroke="var(--accent-mint)" stroke-width="2.8"></line>
+                    <rect x="246" y="51" width="58" height="24" rx="12" fill="var(--accent-mint)"></rect>
+                    <text x="275" y="67" text-anchor="middle" font-family="JetBrains Mono" font-size="11.5" font-weight="700" fill="#031511">${rx.groupLabel}</text>
+
+                    <text x="342" y="116" font-family="JetBrains Mono" font-size="13" font-weight="700" fill="var(--text-secondary)">+ ${rx.byproduct}</text>
+                    <text x="210" y="196" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--accent-mint)">Aromatisitas Pulih • Produk Stabil Terbentuk</text>
+                `;
+            }
+        }
+
+        const rxSlider = document.getElementById('rxTimelineSlider');
+        rxSlider.addEventListener('input', e => {
+            state.rxPlaying = false;
+            document.getElementById('btnPlayRxLabel').textContent = 'Putar Tahap';
+            state.rxProgress = Number(e.target.value);
+            updateReactionVisuals();
+        });
+
+        document.getElementById('btnPlayRx').addEventListener('click', () => {
+            if (state.rxProgress >= 100) state.rxProgress = 0;
+            state.rxPlaying = !state.rxPlaying;
+            document.getElementById('btnPlayRxLabel').textContent = state.rxPlaying ? 'Jeda' : 'Putar Tahap';
+        });
+
+        setInterval(() => {
+            if (state.rxPlaying && state.activeModule === 'mod-reaksi') {
+                state.rxProgress += 1.2;
+                if (state.rxProgress >= 100) {
+                    state.rxProgress = 100;
+                    state.rxPlaying = false;
+                    document.getElementById('btnPlayRxLabel').textContent = 'Putar Ulang';
+                }
+                rxSlider.value = state.rxProgress;
+                updateReactionVisuals();
+            }
+        }, 45);
+
+        /* ==========================================================================
+           7. MODUL 4: KUIS 10 SOAL ACAK, TIMER OPSIONAL & KONFETI HALUS
+           ========================================================================== */
+        function shuffle(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function startNewQuiz() {
+            clearInterval(state.timerId);
+            state.quizList = shuffle(QUIZ_QUESTIONS).slice(0, 10);
+            state.quizIdx = 0;
+            state.quizScore = 0;
+            state.quizLocked = false;
+
+            document.getElementById('quizQuestionCard').style.display = 'block';
+            document.getElementById('quizSummaryCard').style.display = 'none';
+            renderQuizQuestion();
+        }
+
+        function startQuestionTimer() {
+            clearInterval(state.timerId);
+            const display = document.getElementById('quizTimerDisplay');
+            if (!state.timerEnabled) {
+                display.style.display = 'none';
+                return;
+            }
+            state.timerSeconds = 30;
+            display.style.display = 'inline-block';
+            display.textContent = '00:30';
+
+            state.timerId = setInterval(() => {
+                if (state.quizLocked) {
+                    clearInterval(state.timerId);
+                    return;
+                }
+                state.timerSeconds--;
+                display.textContent = `00:${String(Math.max(0, state.timerSeconds)).padStart(2, '0')}`;
+                if (state.timerSeconds <= 0) {
+                    clearInterval(state.timerId);
+                    submitQuizAnswer(-1); // Waktu habis
+                }
+            }, 1000);
+        }
+
+        function renderQuizQuestion() {
+            const q = state.quizList[state.quizIdx];
+            state.quizLocked = false;
+
+            document.getElementById('quizStepCounter').textContent = `SOAL ${String(state.quizIdx + 1).padStart(2, '0')} / 10`;
+            document.getElementById('quizCategoryTag').textContent = q.category;
+            document.getElementById('quizPrompt').textContent = q.prompt;
+
+            const list = document.getElementById('quizOptionsList');
+            list.innerHTML = '';
+            const keys = ['A', 'B', 'C', 'D'];
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-key">${keys[idx]}</span><span>${opt}</span>`;
+                btn.addEventListener('click', () => submitQuizAnswer(idx));
+                list.appendChild(btn);
+            });
+
+            const fb = document.getElementById('quizFeedback');
+            fb.style.display = 'none';
+            document.getElementById('btnNextQuiz').style.display = 'none';
+            startQuestionTimer();
+        }
+
+        function submitQuizAnswer(chosenIdx) {
+            if (state.quizLocked) return;
+            state.quizLocked = true;
+            clearInterval(state.timerId);
+
+            const q = state.quizList[state.quizIdx];
+            const isCorrect = chosenIdx === q.answer;
+            if (isCorrect) state.quizScore++;
+
+            document.querySelectorAll('#quizOptionsList .option-btn').forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.answer) btn.classList.add('correct');
+                else if (idx === chosenIdx && !isCorrect) btn.classList.add('wrong');
+            });
+
+            const fb = document.getElementById('quizFeedback');
+            fb.style.display = 'block';
+            fb.style.background = isCorrect ? 'var(--accent-mint-dim)' : 'var(--danger-dim)';
+            fb.style.border = `1px solid ${isCorrect ? 'var(--accent-mint)' : 'var(--danger)'}`;
+            fb.innerHTML = `
+                <strong style="color:${isCorrect ? 'var(--accent-mint)' : 'var(--danger)'};">
+                    ${isCorrect ? 'Tepat Sekali!' : (chosenIdx === -1 ? 'Waktu Habis!' : 'Belum Tepat.')}
+                </strong>
+                <div style="margin-top:4px; color:var(--text-secondary);">${q.explain}</div>
+            `;
+
+            const nextBtn = document.getElementById('btnNextQuiz');
+            nextBtn.style.display = 'inline-flex';
+            nextBtn.textContent = state.quizIdx === 9 ? 'Lihat Hasil Akhir' : 'Soal Berikutnya';
+        }
+
+        document.getElementById('toggleQuizTimer').addEventListener('change', e => {
+            state.timerEnabled = e.target.checked;
+            if (!state.quizLocked) startQuestionTimer();
+        });
+
+        document.getElementById('btnNextQuiz').addEventListener('click', () => {
+            state.quizIdx++;
+            if (state.quizIdx < 10) renderQuizQuestion();
+            else finishQuiz();
+        });
+
+        function finishQuiz() {
+            document.getElementById('quizQuestionCard').style.display = 'none';
+            document.getElementById('quizSummaryCard').style.display = 'block';
+
+            const scorePct = state.quizScore * 10;
+            const ring = document.getElementById('finalScoreRing');
+            const circ = 314.16;
+            ring.style.strokeDashoffset = circ;
+            requestAnimationFrame(() => {
+                ring.style.strokeDashoffset = circ - (scorePct / 100) * circ;
+            });
+
+            document.getElementById('finalScoreNumber').textContent = scorePct;
+            document.getElementById('finalScoreText').textContent =
+                `Kamu menjawab benar ${state.quizScore} dari 10 pertanyaan tentang struktur, tata nama, dan reaksi benzena.`;
+
+            let title = 'Peneliti Pemula';
+            if (scorePct >= 90) title = 'Master Kimia Aromatik';
+            else if (scorePct >= 75) title = 'Analis Laboratorium Handal';
+            else if (scorePct >= 60) title = 'Praktikan Kimia Baik';
+            document.getElementById('badgeHeadline').textContent = title;
+
+            if (scorePct >= 80 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                launchSubtleConfetti();
+            }
+        }
+
+        document.getElementById('btnRetryQuiz').addEventListener('click', startNewQuiz);
+
+        // Konfeti Halus untuk Skor Tinggi
+        function launchSubtleConfetti() {
+            const c = document.getElementById('confettiCanvas');
+            const ctx = c.getContext('2d');
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+            const colors = ['#00e5a8', '#f59e0b', '#38bdf8', '#ecf6f8'];
+            const pieces = Array.from({ length: 55 }, () => ({
+                x: Math.random() * c.width,
+                y: -20 - Math.random() * 140,
+                vy: 2.2 + Math.random() * 2.5,
+                vx: (Math.random() - 0.5) * 2,
+                size: 5 + Math.random() * 5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * Math.PI
+            }));
+
+            let frame = 0;
+            function step() {
+                ctx.clearRect(0, 0, c.width, c.height);
+                pieces.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rot += 0.05;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                    ctx.restore();
+                });
+                frame++;
+                if (frame < 130) requestAnimationFrame(step);
+                else ctx.clearRect(0, 0, c.width, c.height);
+            }
+            requestAnimationFrame(step);
+        }
+
+        /* ==========================================================================
+           INISIALISASI SAAT HALAMAN SIAP
+           ========================================================================== */
+        window.addEventListener('resize', resizeBenzeneCanvas);
+        window.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeDetailSheet();
+                glossaryPopover.classList.remove('visible');
+                document.getElementById('atomTooltip').classList.remove('show');
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            resizeBenzeneCanvas();
+            requestAnimationFrame(renderBenzeneLoop);
+            renderDerivativesGallery();
+            initNomenclatureBuilder();
+            initReactionsModule();
+            startNewQuiz();
+            updateSessionProgress();
+        });
+    </script>
+</body>
+</html>

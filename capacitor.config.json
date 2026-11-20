@@ -1,0 +1,9 @@
+{
+  "appId": "com.aromatiklab.app",
+  "appName": "AromatikLab",
+  "webDir": "www",
+  "backgroundColor": "#061014",
+  "android": {
+    "allowMixedContent": false
+  }
+}
